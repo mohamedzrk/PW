@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Página de registro</title>
+  <link rel="stylesheet" href="registro_st.css" /> <!-- Vinculamos con hoja de estilos-->
+</head>
+<body>
+
+
+  <div class="contenedor-registro">
+   
+    <h1>
+      Regístrese de forma completamente ¡GRATUITA!
+    </h1>
+
+
+    <!-- Formulario de registro -->
+    <form class="formulario" action="identificación.html" method="POST">
+      
+      <!-- Campo Nombre -->
+      <div class="campo">
+        <label for="nombre">Nombre</label>
+        <input type="text"/>
+      </div>
+      
+      <!-- Campo Apellidos -->
+      <div class="campo">
+        <label for="apellidos">Apellidos</label>
+        <input type="text"/>
+      </div>
+      
+     
+      <div class="campo">
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" id="correo" name="correo" required />
+      </div>
+
+      <!-- Actividad preferida -->
+      <h2>¿Cuál es tu actividad favorita?</h2>
+      <div class="campo">
+        <label for="actividad">Tipo de actividad preferida</label>
+        <select id="actividad" name="actividad" required>
+          <option value="">Seleccione una opción</option>
+          <option value="1">Ciclismo en ruta</option>
+          <option value="2">Ciclismo MTB</option>
+          <option value="3">Senderismo</option>
+          <option value="4">Carrera</option>
+        </select>
+      </div>
+
+      <h2>¿Cuál es tu fecha de nacimiento?</h2>
+      <div class="campo">
+        <label for="fecha_nacimiento">Fecha de nacimiento</label>
+        <input type="date" max="2025-03-05" min="1900-01-01" required />
+      </div>
+        
+
+      <!-- País -->
+      <div class="campo">
+        <label for="pais">País</label>
+        <select id="pais" name="pais" >
+          <option value="">Seleccione un país</option>
+          <!-- Aqui cargamos países desde la BD  -->
+        </select>
+      </div>
+
+      <!-- Provincia -->
+      <div class="campo">
+        <label for="provincia">Provincia</label>
+        <select id="provincia" name="provincia">
+          <option value="">Seleccione una provincia</option>
+          <!-- Aquí cargamos provincias de la BD -->
+        </select>
+      </div>
+
+      <!-- Localidad -->
+      <div class="campo">
+        <label for="localidad">Localidad</label>
+        <select id="localidad" name="localidad">
+          <option value="">Seleccione una localidad</option>
+          <!-- Aquí se cargarán localidades de la BD-->
+        </select>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="campo">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+
+      <!-- Repetir contraseña -->
+      <div class="campo">
+        <label for="password2">Repetir Contraseña</label>
+        <input type="password" id="password2" name="password2" required />
+      </div>
+
+      <!-- Botón de registro -->
+      <button type="submit" class="btn-registrar">Registrarse</button>
+     
+
+    </form>
+  </div>
+
+  
+</body>
+</html>

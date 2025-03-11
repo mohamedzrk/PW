@@ -1,0 +1,54 @@
+body {
+    background: url('DALL·E 2025-03-10 17.14.52 - A motivational sports-themed background image for a website. The image features a cool blue-toned sunrise over a running track, with an athlete tying .webp') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .contenedor-inicial {
+    text-align: center;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+  }
+  
+  h1 {
+    color: #333333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    color: #666666;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  form {
+    flex: 1;
+  }
+  
+  .btn {
+    background-color: #8cbaeb;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
