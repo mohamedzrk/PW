@@ -1,0 +1,278 @@
+  body {
+    font-family: 'Lucida Sans', sans-serif; /* Fuente de letra*/
+    text-align: center; /*Centramos el texto*/
+  }
+  
+  
+  body.bg-bcceee {
+    background-color: #bcceee; /*color de fondo de las paginas*/
+  }
+  
+
+  
+  /* Para la página index con imagen de fondo */
+  body.bg-index {
+    background: url('DALL·E 2025-03-10 17.14.52 - A motivational sports-themed background image for a website. The image features a cool blue-toned sunrise over a running track, with an athlete tying .webp');
+    background-size: cover; /*Redimensionamos la imagen para que cubra toda la pantalla*/
+  }
+  
+    /*Header*/
+  header {
+    background-color: #357cac; /*Color de fondo del header*/
+    padding: 10px;  /*Tamaño interno del header*/
+    border-radius: 10px; /*Borde redondeado del header*/
+    margin-bottom: 20px; /*Margen inferior del header*/
+    color: #b5f7e6; /*Color de letra del header*/
+    font-size: 20px; /*Tamaño de letra del header*/
+  }
+  
+  /*Barra de navegación*/
+  nav {
+    background-color: #b5f7e6; /*Color de fondo del nav*/
+    padding: 15px; /*Tamaño interno del nav*/
+    border-radius: 10px; /*Borde redondeado del nav*/
+    margin-bottom: 20px; /*Margen inferior del nav*/
+  }
+  
+  /*Lista de navegación*/
+  nav ul {
+    list-style: none; /*Quitamos los puntos de la lista*/
+  }
+  
+    /*Elementos de la lista de navegación*/
+  nav ul li {
+    display: inline; /*Mostramos los elementos de la lista horizontalmente*/
+    margin: 15px;  /*Margen entre elementos de la lista*/
+  }
+  
+
+/* Enlace de la lista de navegación */
+
+  nav ul li a {
+    text-decoration: none; /*Quitamos el subrayado de los enlaces*/
+    color: #357cac; /*Color de letra de los enlaces*/
+    font-size: 18px; /*Tamaño de letra de los enlaces*/
+  }
+  
+  nav ul li a:hover {
+    color: #fff; /*Color de letra de los enlaces al pasar el ratón por encima*/
+  }
+
+
+  .logout {
+    background-color: red;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: white;
+  }
+  
+  .logout:hover {
+    background-color: darkred;
+  }
+  
+  
+  /*Buscador de amigos*/ 
+  
+  .buscador input {
+    padding: 10px; /*Tamaño del padding del input*/
+    font-size: 16px; /*Tamaño de letra del input*/
+    width: 300px; /*Ancho del input*/ 
+    border-radius: 10px;
+  }
+  
+  .buscador button {
+    padding: 11px; /*Tamaño del botón*/
+    font-size: 16px;
+    background-color: #2980b9;
+    color: white; /*Color de letra del botón*/
+    cursor: pointer; /*Cursor al pasar por encima del botón*/
+    border-radius: 10px;
+  }
+  
+  .buscador button:hover {
+    background-color: #082b46; /*Color de fondo del botón al pasar el ratón por encima*/
+  }
+  
+  
+  
+  /* GESTIÓN DE PERFIL  y registro  */
+
+  .contenedor-registro {
+    width: auto; /*Ancho del contenedor*/
+    margin: 100px 350px; /*Margenes del contenedor por arriba y por los lados*/
+    background: #c2e6f1;
+    padding: 40px; /*Tamaño interno del contenedor*/
+    border-radius: 15px;
+  }
+
+  .campo {
+    display: flex; /*Mostramos los elementos en línea*/
+    flex-direction: column ; /*Dirección de los elementos (columnas)*/
+    margin-bottom: 40px; /*Margen inferior de los elementos*/
+  }
+  
+  .campo label {
+    font-size: 18px; /*Tamaño de letra de las etiquetas*/
+
+  }
+  
+  .campo input[type="text"],
+  .campo input[type="email"],
+  .campo input[type="password"],
+  .campo input[type="date"],
+  .campo select {
+    padding: 12px; /*Tamaño del padding de los inputs*/
+    border-radius: 35px;
+    font-size: 16px; /*Tamaño de letra de los inputs*/
+  }
+  
+  .btn-registrar {
+    padding: 20px;
+    font-size: 16px; /*Tamaño de letra del botón*/
+    background: #49adf0;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer; 
+  }
+  
+  .btn-registrar:hover {
+    background: #006db6;
+  }
+
+
+  /* =====================================================
+     IDENTIFICACIÓN (identificación_styles.css)
+  ===================================================== */
+  .contenedor-inicio {
+    width: auto;
+    margin: 150px 400px;
+    background: #b5f7e6;
+    padding: 40px;
+    border-radius: 15px;
+  }
+  
+  
+  .campo input[type="email"],
+  .campo input[type="password"],
+  .campo select {
+    padding: 12px;
+    border-radius: 40px;
+  }
+  
+  /* Botón para iniciar sesión */
+  .btn-iniciar {
+    padding: 20px;
+    font-size: 16px;
+    background: #49adf0;
+    color: #fff;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  
+  .btn-iniciar:hover {
+    background: #006db6;
+  }
+  
+  /* =====================================================
+     INICIO (index.css)
+  ===================================================== */
+  .contenedor-inicial {
+    padding: 60px;
+    background-color: #e6f7f2;
+    margin: 120px 400px ;
+    border-radius: 10px;
+  }
+
+  .botones {
+    display: flex; 
+    flex-direction: row; /*Mostramos los botones en línea horizontalmente*/
+    gap: 35px; /*Espacio entre los botones*/
+    justify-content: center; /*Centramos los botones*/
+  }
+  
+
+  
+  .btn {
+    padding: 30px; 
+    background-color: #5fa3ec;
+    color: #ffffff;
+    border: paleturquoise; /*Color del borde del botón*/
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #05386e;
+  }
+  
+  /* =====================================================
+     INI (ini.css)
+  ===================================================== */
+
+  
+ 
+  .contenido {
+    margin-top: 100px;
+    background: white;
+    padding: 10px;
+
+    /* Hacer que el cuadrado llegaue hasta el final de la derecha y la izquierda */
+    margin-left: -5px;
+    margin-right: -5px;
+
+  }
+  
+  .contenido h2 {
+    color: #0056b3;
+  }
+  
+  .contenido p {
+    font-size: 18px;
+  }
+
+  
+  /* =====================================================
+     PUBLICAR ACTIVIDAD (pub_act.css)
+  ===================================================== */
+  .contenedor-actividad {
+    width: 550px;
+    margin: 100px 350px;
+    background: #b5f7e6;
+    padding: 40px;  /* espacio alrededor del contenido */
+    border-radius: 15px;
+  }
+  
+
+  
+  .campo input[type="file"] {
+    background-color: #ffffff;
+    padding: 12px;
+
+    border-radius: 40px;
+    font-size: 16px;
+  }
+  
+  
+  /* =====================================================
+     TABLÓN (tablón.css)
+  ===================================================== */
+
+  
+  .paginacion {
+    margin-top: 20px;
+  }
+  
+  .paginacion button {
+    background-color: #2980b9;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+  }
+  
+  .paginacion button:hover {
+    background-color: #1f5a87;
+  }
+  

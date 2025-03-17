@@ -1,17 +1,25 @@
+<?php include 'header.php'; ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Gestión de Perfil</title>
-  <link rel="stylesheet" href="g_perfil.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+
+
+<body class="bg-bcceee">
+
+
+
   <div class="contenedor-registro">
     <h1>Gestión de Perfil</h1>
     <form action="updateProfile.php" method="post" class="formulario">
       <div class="campo">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required>
+        <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required> <!-- Campo obligatorio -->
       </div>
       
       <div class="campo">
@@ -32,7 +40,7 @@
       
       <div class="campo">
         <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+        <input type="date" max="2025-03-05" min="1900-01-01" required />
       </div>
       
       <div class="campo">

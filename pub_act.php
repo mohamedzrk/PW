@@ -1,14 +1,18 @@
+<?php include 'header.php'; ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Publicar Actividad</title>
-  <link rel="stylesheet" href="pub_act.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+
+
+<body class="bg-bcceee">
   <div class="contenedor-actividad">
     <h1>Publicar Actividad</h1>
-    <form action="publicarActividad.php" method="post" class="formulario" enctype="multipart/form-data">
+    <form action="publicarActividad.php" ethod="post" class="formulario" enctype="multipart/form-data">
       <div class="campo">
         <label for="titulo">Título:</label>
         <input type="text" id="titulo" name="titulo" placeholder="Título de la actividad" required>
