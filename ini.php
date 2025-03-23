@@ -11,14 +11,13 @@
 </head>
 
 
-<body class="bg-bcceee">
-
+<body class="bg-index">
 
 
  
     <div class="contenido">
-      <h2>Explora y Conecta</h2>
-      <p>Selecciona una opción del menú para comenzar y descubre una comunidad activa de deportistas.</p>
+      <h2> "Entrena como si nunca hubieras ganado, compite como si nunca hubieras perdido." </h2>
+      <p>Selecciona una opción del menú para comenzar una nueva aventura deportiva.</p>
     </div>
 
 </body>

@@ -3,6 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="es">
+  
 <head>
   <meta charset="UTF-8">
   <title>Gestión de Perfil</title>
@@ -10,16 +11,16 @@
 </head>
 
 
-<body class="bg-bcceee">
+<body class="bg-index">
 
 
 
   <div class="contenedor-registro">
     <h1>Gestión de Perfil</h1>
-    <form action="updateProfile.php" method="post" class="formulario">
+    <form action="ini.php" method="POST" class="formulario">
       <div class="campo">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required> <!-- Campo obligatorio -->
+        <input type="text" id="nombre" name="nombre" value="Carlos" required> <!-- Campo obligatorio -->
       </div>
       
       <div class="campo">
@@ -29,7 +30,7 @@
       
       <div class="campo">
         <label for="tipoActividad">Tipo de Actividad Preferida:</label>
-        <select id="tipoActividad" name="tipoActividad" required>
+        <select name="tipoActividad" required>
           <option value="">Seleccione...</option>
           <option value="ciclismoRuta">Ciclismo en Ruta</option>
           <option value="ciclismoMTB">Ciclismo MTB</option>
@@ -45,7 +46,7 @@
       
       <div class="campo">
         <label for="pais">País:</label>
-        <select id="pais" name="pais" required>
+        <select name="pais" required>
           <option value="">Seleccione País</option>
           <option value="España">España</option>
           <option value="Mexico">México</option>
@@ -55,7 +56,7 @@
       
       <div class="campo">
         <label for="provincia">Provincia:</label>
-        <select id="provincia" name="provincia" required>
+        <select name="provincia" required>
           <option value="">Seleccione Provincia</option>
           <option value="Madrid">Madrid</option>
           <option value="Barcelona">Barcelona</option>
@@ -64,7 +65,7 @@
       
       <div class="campo">
         <label for="localidad">Localidad:</label>
-        <select id="localidad" name="localidad" required>
+        <select name="localidad" required>
           <option value="">Seleccione Localidad</option>
           <option value="Alcobendas">Alcobendas</option>
           <option value="Móstoles">Móstoles</option>

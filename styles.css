@@ -3,13 +3,6 @@
     text-align: center; /*Centramos el texto*/
   }
   
-  
-  body.bg-bcceee {
-    background-color: #bcceee; /*color de fondo de las paginas*/
-  }
-  
-
-  
   /* Para la página index con imagen de fondo */
   body.bg-index {
     background: url('DALL·E 2025-03-10 17.14.52 - A motivational sports-themed background image for a website. The image features a cool blue-toned sunrise over a running track, with an athlete tying .webp');
@@ -35,12 +28,12 @@
   }
   
   /*Lista de navegación*/
-  nav ul {
+  ul {
     list-style: none; /*Quitamos los puntos de la lista*/
   }
   
     /*Elementos de la lista de navegación*/
-  nav ul li {
+  li {
     display: inline; /*Mostramos los elementos de la lista horizontalmente*/
     margin: 15px;  /*Margen entre elementos de la lista*/
   }
@@ -48,13 +41,13 @@
 
 /* Enlace de la lista de navegación */
 
-  nav ul li a {
+  a {
     text-decoration: none; /*Quitamos el subrayado de los enlaces*/
     color: #357cac; /*Color de letra de los enlaces*/
-    font-size: 18px; /*Tamaño de letra de los enlaces*/
+    font-size: 20px; /*Tamaño de letra de los enlaces*/
   }
   
-  nav ul li a:hover {
+  a:hover {
     color: #fff; /*Color de letra de los enlaces al pasar el ratón por encima*/
   }
 
@@ -91,6 +84,7 @@
   
   .buscador button:hover {
     background-color: #082b46; /*Color de fondo del botón al pasar el ratón por encima*/
+    transform: translateY(-2px);
   }
   
   
@@ -109,6 +103,7 @@
     display: flex; /*Mostramos los elementos en línea*/
     flex-direction: column ; /*Dirección de los elementos (columnas)*/
     margin-bottom: 40px; /*Margen inferior de los elementos*/
+    
   }
   
   .campo label {
@@ -116,10 +111,7 @@
 
   }
   
-  .campo input[type="text"],
-  .campo input[type="email"],
-  .campo input[type="password"],
-  .campo input[type="date"],
+  .campo input,
   .campo select {
     padding: 12px; /*Tamaño del padding de los inputs*/
     border-radius: 35px;
@@ -137,12 +129,11 @@
   
   .btn-registrar:hover {
     background: #006db6;
+    transform: translateY(-2px);
   }
 
 
-  /* =====================================================
-     IDENTIFICACIÓN (identificación_styles.css)
-  ===================================================== */
+  /*  IDENTIFICACIÓN (identificación_styles.css) */
   .contenedor-inicio {
     width: auto;
     margin: 150px 400px;
@@ -152,12 +143,6 @@
   }
   
   
-  .campo input[type="email"],
-  .campo input[type="password"],
-  .campo select {
-    padding: 12px;
-    border-radius: 40px;
-  }
   
   /* Botón para iniciar sesión */
   .btn-iniciar {
@@ -171,11 +156,10 @@
   
   .btn-iniciar:hover {
     background: #006db6;
+    transform: translateY(-2px);
   }
   
-  /* =====================================================
-     INICIO (index.css)
-  ===================================================== */
+  /* INICIO (index.css)*/
   .contenedor-inicial {
     padding: 60px;
     background-color: #e6f7f2;
@@ -204,11 +188,10 @@
   
   .btn:hover {
     background-color: #05386e;
+    transform: translateY(-2px); /*Efecto visual al pasar el raton*/
   }
   
-  /* =====================================================
-     INI (ini.css)
-  ===================================================== */
+  /*  INI (ini.css)*/
 
   
  
@@ -232,9 +215,7 @@
   }
 
   
-  /* =====================================================
-     PUBLICAR ACTIVIDAD (pub_act.css)
-  ===================================================== */
+  /*  PUBLICAR ACTIVIDAD (pub_act.css) */
   .contenedor-actividad {
     width: 550px;
     margin: 100px 350px;
@@ -254,16 +235,11 @@
   }
   
   
-  /* =====================================================
-     TABLÓN (tablón.css)
-  ===================================================== */
+  /*  TABLÓN (tablón.css)  */
 
   
   .paginacion {
     margin-top: 20px;
-  }
-  
-  .paginacion button {
     background-color: #2980b9;
     color: white;
     padding: 10px 15px;
@@ -272,7 +248,114 @@
     margin: 5px;
   }
   
-  .paginacion button:hover {
+  .paginacion:hover{
     background-color: #1f5a87;
+    transform: translateY(-2px);
   }
-  
+
+
+
+/* Usuario simulado */
+.usuario {
+  display: flex; /* Cambiado a flex para alinear imagen y texto en fila */
+  text-align: center;
+  align-items: center; /* Centra los elementos verticalmente */
+  background-color: #ffffff;
+  width: 1000px;
+  height: 200px; /* Ajuste automático según el contenido */
+  color: rgb(0, 0, 0);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-left: 70px;
+  gap: 30px; /* Espacio entre la imagen y el texto */
+}
+
+/* Imagen del usuario */
+.usuario img,
+.g_usuario img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Hace la imagen circular */
+}
+
+.perfil{
+  background-color: #357cac;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  margin-left: 400px;
+  margin-right: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.perfil img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.perfil p {
+  font-size: 18px;
+}
+
+
+
+.actividad {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  width: 1400px;
+  height: 200px; 
+  padding: 20px;
+  margin-bottom: 20px;
+  gap: 60px; /* Espacio entre el texto y las imágenes */
+}
+
+
+
+
+.imagenes-actividad {
+  display: flex;  /* Coloca las imágenes una al lado de otra */
+  gap: 10px;
+}
+
+
+.imagenes-actividad img {
+  width: 150px;   
+  height: 150px;  
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.imagenes-actividad img:hover {
+  transform: scale(1.10);
+}
+
+
+body.bg-admin {
+  background: url('top-view-international-worker-s-day-with-engineer-tools.jpg');
+  background-size: cover; /*Redimensionamos la imagen para que cubra toda la pantalla*/
+}
+
+.g_usuario {
+  display: flex; /* Cambiado a flex para alinear imagen y texto en fila */
+  text-align: center;
+  align-items: center; /* Centra los elementos verticalmente */
+  background-color: #ffffff;
+  width: 1200px;
+  height: 200px; /* Ajuste automático según el contenido */
+  color: rgb(0, 0, 0);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-left: 70px;
+  gap: 30px; /* Espacio entre la imagen y el texto */
+}
+

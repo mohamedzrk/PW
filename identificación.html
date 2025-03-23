@@ -3,42 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <title>Página de Inicio de Sesion</title>
-  <link rel="stylesheet" href="styles.css" /> <!-- Vinculamos con hoja de estilos-->
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-bcceee">
-
+<body class="bg-index">
 
   <div class="contenedor-inicio">
-   
-    <h1>
-      ¡Inicia Sesión!
-    </h1>
-
+    <h1>¡Inicia Sesión!</h1>
 
     <!-- Formulario de registro -->
-    <form class="formulario" action="ini.php" method="get"> 
+    <form class="formulario" action="ini.php" method="GET"> 
       
-     
       <div class="campo">
         <label for="correo">Correo Electrónico</label>
         <input type="email" id="correo" name="correo" required />
       </div>
 
-
-
-      <!-- Contraseña -->
       <div class="campo">
         <label for="password">Contraseña</label>
         <input type="password" id="password" name="password" required />
       </div>
 
-
-      <!-- Botón de iniciar sesión -->
+      <!-- Botón de iniciar sesión (usuario) -->
       <button type="submit" class="btn-iniciar">Iniciar Sesion</button>
+
+      <!-- Botón de iniciar sesión (admin) con formaction -->
+      <button type="submit" class="btn-iniciar" formaction="ini_admin.php">
+        Iniciar Sesion ADMIN
+      </button>
       
     </form>
   </div>
 
-  
 </body>
 </html>

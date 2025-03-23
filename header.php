@@ -4,7 +4,7 @@
 
    
   <nav>
-    <ul>
+    <ul> 
       <li><a href="g_perfil.php">Gestión de Perfil</a></li>
       <li><a href="pub_act.php">Publicar Actividad</a></li>
       <li><a href="buscador.php">Buscador de Usuarios</a></li>
