@@ -359,3 +359,40 @@ body.bg-admin {
   gap: 30px; /* Espacio entre la imagen y el texto */
 }
 
+
+/* ================================
+   LISTADO DE ÍTEMS
+================================ */
+
+.bg-admin h1 {
+  color: #022136;
+  background: #fffefe;
+  padding: 20px;
+}
+
+
+.listado-items {
+  background: #81cee6;
+  padding: 20px;
+  margin: 50px 250px;
+  max-width: 800px;
+  border-radius: 10px;
+  text-align: center;
+  
+}
+
+.listado-items h2 {
+  color: #357cac;
+  margin-bottom: 15px;
+}
+
+
+.alta-item {
+  background: #fff;
+  padding: 20px;
+  margin: 40px auto;
+  max-width: 600px;
+  border-radius: 10px;
+  text-align: center;
+}
+

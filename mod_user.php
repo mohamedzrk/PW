@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include 'header_admin.php'; ?>
 
 
 <!DOCTYPE html>
@@ -6,18 +6,18 @@
   
 <head>
   <meta charset="UTF-8">
-  <title>Gestión de Perfil</title>
+  <title>Modificar usuario</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 
-<body class="bg-index">
+<body class="bg-admin">
 
 
 
   <div class="contenedor-registro">
-    <h1>Gestión de Perfil</h1>
-    <form action="ini.php" method="POST" class="formulario">
+    <h1>Modificar perfil</h1>
+    <form action="ini_admin.php" method="POST" class="formulario">
       <div class="campo">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" value="Carlos" required> <!-- Campo obligatorio -->

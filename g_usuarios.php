@@ -28,7 +28,7 @@
 
                 <a href="ver_perfil.php" class="btn-registrar">Ver Perfil</a>
                 <button class="btn-registrar">Eliminar</button>
-                <button class="btn-registrar">Modificar</button>
+                <a href="mod_user.php" class="btn-registrar">Modificar</a>
         </div>
 
 
