@@ -15,63 +15,119 @@
 
 
   <div class="listado-items">
-    <h2>Listado de Ítems</h2>
+    <h2>Listado de Ítems (Seleccione el tipo de item que quiere listar)</h2>
 
-        <p>ID: 1</p>
-        <p>Entidad: Tipo de Actividad</p>
-        <p>Nombre: Ciclismo en Ruta</p>
-
-        <button class="btn-registrar">Editar</button>
-        <button class="btn-registrar">Eliminar</button>
+    <nav class="menu">
+    <ul> 
+      <li><a href="tipoActividad.php">Tipo de actividad</a></li>
+      <li><a href="paises.php">Paises</a></li>
+      <li><a href="provincias.php">Provincias</a></li>
+      <li><a href="localidades.php"> Localidades</a></li>
+    </ul>
+  </nav>
   
+
+  </div>
+
+  <h1>Añadir Item</h1>
+  
+  <div class="alta-item">
+
+    <h2>Alta Pais</h2>
+    <form action="ini_admin.php">
+
+
+      <div class="campo">
+        <label for="nombreItem">Nombre:</label>
+        <input type="text" name="nombreItem" required>
+      </div>
+      
+      <button class="btn">Guardar Ítem</button>
+    </form>
+  </div>
+
+
+  <div class="alta-item">
+
+    <h2>Alta tipo de actividad</h2>
+    <form action="ini_admin.php">
+
+
+      <div class="campo">
+        <label for="nombreItem">Nombre:</label>
+        <input type="text" name="nombreItem" required>
+      </div>
+      
+      
+      <button class="btn">Guardar Ítem</button>
+    </form>
 
   </div>
 
 
   <div class="alta-item">
 
-    <h2>Alta de Ítem</h2>
-    <form action="ini_admin.php" method="post">
-      <div class="campo">
-        <label for="entidad">Entidad:</label>
-        <select id="entidad" name="entidad" required>
-          <option value="">Seleccione la entidad</option>
-          <option value="tipoActividad">Tipo de Actividad</option>
-          <option value="pais">País</option>
-          <option value="provincia">Provincia</option>
-          <option value="localidad">Localidad</option>
-        </select>
-      </div>
+    <h2>Alta Provincia</h2>
+    <form action="ini_admin.php">
 
 
       <div class="campo">
         <label for="nombreItem">Nombre:</label>
-        <input type="text" id="nombreItem" name="nombreItem" required>
+        <input type="text" name="nombreItem" required>
       </div>
       
 
       <div class="campo">
-        <label for="pais-select">País (para Provincia o Localidad):</label>
-        <select id="pais-select" name="pais-select">
+        <label for="pais">País:</label>
+        <select name="pais">
           <option value="">Seleccione un país</option>
           <option value="España">España</option>
           <option value="México">México</option>
           <option value="Argentina">Argentina</option>
         </select>
       </div>
-
-      <div class="campo">
-        <label for="provincia-select">Provincia (para Localidad):</label>
-        <select id="provincia-select" name="provincia-select">
-          <option value="">Seleccione una provincia</option>
-          <option value="Madrid">Madrid</option>
-          <option value="Barcelona">Barcelona</option>
-        </select>
-      </div>
       
-      <button type="submit" class="btn-registrar">Guardar Ítem</button>
+      <button class="btn">Guardar Ítem</button>
     </form>
   </div>
+
+
+<div class="alta-item">
+
+<h2>Alta Localidad</h2>
+<form action="ini_admin.php">
+
+
+  <div class="campo">
+    <label for="nombreItem">Nombre:</label>
+    <input type="text" name="nombreItem" required>
+  </div>
+  
+
+  <div class="campo">
+    <label for="pais">País:</label>
+    <select name="pais">
+      <option value="">Seleccione un país</option>
+      <option value="España">España</option>
+      <option value="Marruecos">México</option>
+      <option value="Alemania">Argentina</option>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label for="provincia">Provincia:</label>
+    <select  name="provincia">
+      <option value="">Seleccione una provincia</option>
+      <option value="Madrid">Madrid</option>
+      <option value="Barcelona">Barcelona</option>
+    </select>
+  </div>
+  
+  <button class="btn">Guardar Ítem</button>
+</form>
+
+</div>
+
 
 </body>
 </html>

@@ -10,7 +10,7 @@
   }
   
     /*Header*/
-  header {
+    header {
     background-color: #357cac; /*Color de fondo del header*/
     padding: 10px;  /*Tamaño interno del header*/
     border-radius: 10px; /*Borde redondeado del header*/
@@ -18,32 +18,42 @@
     color: #b5f7e6; /*Color de letra del header*/
     font-size: 20px; /*Tamaño de letra del header*/
   }
+
+  footer{
+    background-color: #357cac; /*Color de fondo del footer*/
+    padding: 10px;  /*Tamaño interno del footer*/
+    border-radius: 10px; /*Borde redondeado del footer*/
+    margin-top: 20px; /*Margen superior del footer*/
+    color: #b5f7e6; /*Color de letra del footer*/
+    font-size: 20px; /*Tamaño de letra del footer*/
+  }
   
   /*Barra de navegación*/
-  nav {
-    background-color: #b5f7e6; /*Color de fondo del nav*/
+   nav {
+    background-color: #4f7dd1; /*Color de fondo del nav*/
     padding: 15px; /*Tamaño interno del nav*/
     border-radius: 10px; /*Borde redondeado del nav*/
     margin-bottom: 20px; /*Margen inferior del nav*/
   }
   
-  /*Lista de navegación*/
   ul {
     list-style: none; /*Quitamos los puntos de la lista*/
   }
   
-    /*Elementos de la lista de navegación*/
   li {
     display: inline; /*Mostramos los elementos de la lista horizontalmente*/
     margin: 15px;  /*Margen entre elementos de la lista*/
   }
   
+  li:hover {
+    background-color: #052b44; /*Color de fondo al pasar el ratón por encima*/
+    padding: 6px; /*Tamaño del padding al pasar el ratón por encima*/
+    border-radius: 10px; /*Borde redondeado al pasar el ratón por encima*/
+  }
 
-/* Enlace de la lista de navegación */
-
-  a {
+  .menu a{
     text-decoration: none; /*Quitamos el subrayado de los enlaces*/
-    color: #357cac; /*Color de letra de los enlaces*/
+    color: #ffffff; /*Color de letra de los enlaces*/
     font-size: 20px; /*Tamaño de letra de los enlaces*/
   }
   
@@ -54,7 +64,7 @@
 
   .logout {
     background-color: red;
-    padding: 8px 15px;
+    padding: 15px;
     border-radius: 5px;
     color: white;
   }
@@ -73,21 +83,6 @@
     border-radius: 10px;
   }
   
-  .buscador button {
-    padding: 11px; /*Tamaño del botón*/
-    font-size: 16px;
-    background-color: #2980b9;
-    color: white; /*Color de letra del botón*/
-    cursor: pointer; /*Cursor al pasar por encima del botón*/
-    border-radius: 10px;
-  }
-  
-  .buscador button:hover {
-    background-color: #082b46; /*Color de fondo del botón al pasar el ratón por encima*/
-    transform: translateY(-2px);
-  }
-  
-  
   
   /* GESTIÓN DE PERFIL  y registro  */
 
@@ -102,62 +97,67 @@
   .campo {
     display: flex; /*Mostramos los elementos en línea*/
     flex-direction: column ; /*Dirección de los elementos (columnas)*/
+    align-items: center; /*Centramos los elementos*/
+    justify-content: center; /*Centramos los elementos*/
+    margin-top: 20px; /*Margen superior de los elementos*/
+    margin-left: auto; /*Margen izquierdo de los elementos*/
+    margin-right: auto; /*Margen derecho de los elementos*/
+
     margin-bottom: 40px; /*Margen inferior de los elementos*/
+    width: 400px;
+
+    background-color: #ffffff;
+    padding: 12px;
+
+    border-radius: 40px;
+    font-size: 16px;
     
   }
   
-  .campo label {
-    font-size: 18px; /*Tamaño de letra de las etiquetas*/
-
-  }
   
   .campo input,
   .campo select {
-    padding: 12px; /*Tamaño del padding de los inputs*/
+    padding: 15px; /*Tamaño del padding de los inputs*/
     border-radius: 35px;
     font-size: 16px; /*Tamaño de letra de los inputs*/
+    width: 350px; /*Ancho de los inputs*/
   }
   
-  .btn-registrar {
-    padding: 20px;
-    font-size: 16px; /*Tamaño de letra del botón*/
-    background: #49adf0;
-    color: #fff;
-    border-radius: 20px;
-    cursor: pointer; 
-  }
-  
-  .btn-registrar:hover {
-    background: #006db6;
-    transform: translateY(-2px);
-  }
 
 
   /*  IDENTIFICACIÓN (identificación_styles.css) */
   .contenedor-inicio {
-    width: auto;
-    margin: 150px 400px;
+    width:700px;
+    height: 600px;
+    margin-left: auto;
+    margin-right:auto ;
+    margin-top: 100px;
     background: #b5f7e6;
-    padding: 40px;
     border-radius: 15px;
+    display: flex;
+    flex-direction: column; /* apila verticalmente */
+    align-items: center;    /* centra horizontalmente */
+    margin-top: 10px;;
+    text-decoration: none;
   }
-  
-  
-  
-  /* Botón para iniciar sesión */
-  .btn-iniciar {
-    padding: 20px;
-    font-size: 16px;
-    background: #49adf0;
-    color: #fff;
-    border-radius: 15px;
-    cursor: pointer;
+
+  .contenedor-inicio a{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin: 10px;
+    text-decoration: none;
   }
-  
-  .btn-iniciar:hover {
-    background: #006db6;
-    transform: translateY(-2px);
+
+  .contenedor-inicio button{
+    margin-top: 50px;
   }
+
+   .usuarioAmigo a, .usuarioNoAmigo a, .g_usuario a, .contenedor-actividad a, .contenedor-registro a{
+    color: #fcfcfc; /*Color de letra de los enlaces*/
+    text-decoration: none; /*Quitamos el subrayado de los enlaces*/
+  }
+
+  
   
   /* INICIO (index.css)*/
   .contenedor-inicial {
@@ -217,8 +217,8 @@
   
   /*  PUBLICAR ACTIVIDAD (pub_act.css) */
   .contenedor-actividad {
-    width: 550px;
-    margin: 100px 350px;
+    width: 600px;
+    margin: 100px 400px;
     background: #b5f7e6;
     padding: 40px;  /* espacio alrededor del contenido */
     border-radius: 15px;
@@ -226,13 +226,7 @@
   
 
   
-  .campo input[type="file"] {
-    background-color: #ffffff;
-    padding: 12px;
-
-    border-radius: 40px;
-    font-size: 16px;
-  }
+  
   
   
   /*  TABLÓN (tablón.css)  */
@@ -256,23 +250,25 @@
 
 
 /* Usuario simulado */
-.usuario {
+.usuarioAmigo,
+.usuarioNoAmigo {
   display: flex; /* Cambiado a flex para alinear imagen y texto en fila */
   text-align: center;
   align-items: center; /* Centra los elementos verticalmente */
   background-color: #ffffff;
   width: 1000px;
   height: 200px; /* Ajuste automático según el contenido */
-  color: rgb(0, 0, 0);
+  color: #010508;
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 10px;
-  margin-left: 70px;
+  margin-left: 190px;
   gap: 30px; /* Espacio entre la imagen y el texto */
 }
 
 /* Imagen del usuario */
-.usuario img,
+.usuarioAmigo img,
+.usuarioNoAmigo img,
 .g_usuario img {
   width: 100px;
   height: 100px;
@@ -280,7 +276,7 @@
 }
 
 .perfil{
-  background-color: #357cac;
+  background-color: #a1ceec;
   width: auto;
   height: auto;
   border-radius: 10px;
@@ -290,8 +286,9 @@
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   gap: 20px;
+  padding: 20px;
 }
 
 .perfil img {
@@ -315,6 +312,7 @@
   height: 200px; 
   padding: 20px;
   margin-bottom: 20px;
+  margin-left: 35px;
   gap: 60px; /* Espacio entre el texto y las imágenes */
 }
 
@@ -348,14 +346,15 @@ body.bg-admin {
   display: flex; /* Cambiado a flex para alinear imagen y texto en fila */
   text-align: center;
   align-items: center; /* Centra los elementos verticalmente */
+ 
   background-color: #ffffff;
-  width: 1200px;
+  width: 900px;
   height: 200px; /* Ajuste automático según el contenido */
   color: rgb(0, 0, 0);
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 10px;
-  margin-left: 70px;
+  margin-left: 260px;
   gap: 30px; /* Espacio entre la imagen y el texto */
 }
 
@@ -378,6 +377,7 @@ body.bg-admin {
   max-width: 800px;
   border-radius: 10px;
   text-align: center;
+  margin-left: 300px;
   
 }
 
@@ -396,3 +396,57 @@ body.bg-admin {
   text-align: center;
 }
 
+
+
+.tipoItem{
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  width: 400px;
+  margin-left: 500px;
+  margin-right: 400px;
+  height: 150px;
+}
+
+.tipoItem h3 {
+  margin-bottom: 50px;
+}
+
+#imagen2,
+#imagen3, #imagen4, #imagen5 {
+  width: 300px;
+  height: 200px;
+  border-radius: 0px;
+}
+
+#imagen1:active, 
+#imagen2:active, 
+#imagen3:active, 
+#imagen4:active, 
+#imagen5:active,
+#imagen6:active,
+#imagen7:active {
+  transform: scale(2); /* Efecto de zoom al hacer clic */
+}
+
+.usuarioAmigo h5{
+  color: #357cac;
+}
+#no{
+  color: #921717;
+}
+
+.bg-admin .logout {
+  background-color: #d81010;
+  cursor: pointer;
+  border-radius: 9px;
+  width: 80px;
+  height: 45px;
+  color: white;
+}
+
+.bg-admin .logout:hover {
+  background-color: #a81010;
+  transform: translateY(-2px); /*Efecto visual al pasar el raton*/
+}

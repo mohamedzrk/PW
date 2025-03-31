@@ -17,15 +17,18 @@
 
   <div class="contenedor-registro">
     <h1>Gestión de Perfil</h1>
-    <form action="ini.php" method="POST" class="formulario">
+
+
+   <form action="ini.php"> 
+    
       <div class="campo">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" value="Carlos" required> <!-- Campo obligatorio -->
+        <input type="text" name="nombre" value="Carlos" required> <!-- Campo obligatorio -->
       </div>
       
       <div class="campo">
         <label for="apellidos">Apellidos:</label>
-        <input type="text" id="apellidos" name="apellidos" value= "Apellido1 Apellido2" placeholder="Ingrese sus apellidos" required>
+        <input type="text"  name="apellidos" value= "Apellido1 Apellido2" placeholder="Ingrese sus apellidos" required>
       </div>
       
       <div class="campo">
@@ -49,10 +52,12 @@
         <select name="pais" required>
           <option value="">Seleccione País</option>
           <option value="España" selected>España </option>
-          <option value="Mexico">México</option>
-          <option value="Argentina">Argentina</option>
+          <option value="Francia">Francia</option>
+          <option value="Alemania">Alemania</option>
         </select>
       </div>
+
+       
       
       <div class="campo">
         <label for="provincia">Provincia:</label>
@@ -71,9 +76,15 @@
           <option value="Móstoles">Móstoles</option>
         </select>
       </div>
+
+      <button class="btn">Guardar Cambios</button>
+      <button class="btn">Cancelar</button>
+
+      </form>
       
-      <input type="submit" value="Actualizar Perfil" class="btn-registrar">
-    </form>
+
+    
+  
   </div>
 </body>
 </html>

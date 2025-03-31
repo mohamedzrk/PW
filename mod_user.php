@@ -17,25 +17,26 @@
 
   <div class="contenedor-registro">
     <h1>Modificar perfil</h1>
-    <form action="ini_admin.php" method="POST" class="formulario">
+
+    <form action="ini_admin.php">
+
       <div class="campo">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" value="Carlos" required> <!-- Campo obligatorio -->
+        <input type="text"  name="nombre" value="Carlos" required> 
       </div>
       
       <div class="campo">
         <label for="apellidos">Apellidos:</label>
-        <input type="text" id="apellidos" name="apellidos" value= "Apellido1 Apellido2" placeholder="Ingrese sus apellidos" required>
+        <input type="text"  name="apellidos" value= "Apellido1 Apellido2" placeholder="Ingrese sus apellidos" required>
       </div>
       
       <div class="campo">
         <label for="tipoActividad">Tipo de Actividad Preferida:</label>
         <select name="tipoActividad" required>
-          <option value="">Seleccione...</option>
-          <option value="ciclismoRuta" selected>Ciclismo en Ruta</option>
-          <option value="ciclismoMTB">Ciclismo MTB</option>
-          <option value="senderismo">Senderismo</option>
-          <option value="carrera">Carrera</option>
+          <option value="1" selected>Ciclismo en Ruta</option>
+          <option value="2">Ciclismo MTB</option>
+          <option value="3">Senderismo</option>
+          <option value="4">Carrera</option>
         </select>
       </div>
       
@@ -47,32 +48,29 @@
       <div class="campo">
         <label for="pais">País:</label>
         <select name="pais" required>
-          <option value="">Seleccione País</option>
-          <option value="España" selected>España </option>
-          <option value="Mexico">México</option>
-          <option value="Argentina">Argentina</option>
+          <option value="1" selected>España </option>
         </select>
       </div>
       
       <div class="campo">
         <label for="provincia">Provincia:</label>
         <select name="provincia" required>
-          <option value="">Seleccione Provincia</option>
-          <option value="Madrid" selected>Madrid</option>
-          <option value="Barcelona">Barcelona</option>
+          <option value="1" selected>Madrid</option>
+          <option value="2">Barcelona</option>
         </select>
       </div>
       
       <div class="campo">
         <label for="localidad">Localidad:</label>
         <select name="localidad" required>
-          <option value="">Seleccione Localidad</option>
-          <option value="Alcobendas" selected>Alcobendas</option>
-          <option value="Móstoles">Móstoles</option>
+          <option value="1" selected>Alcobendas</option>
+          <option value="2">Móstoles</option>
         </select>
       </div>
       
-      <input type="submit" value="Actualizar Perfil" class="btn-registrar">
+      <button class="btn">Modificar</button>
+
+
     </form>
   </div>
 </body>

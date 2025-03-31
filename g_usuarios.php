@@ -11,25 +11,21 @@
 
 <body class="bg-admin">
 
-<form class="buscador">
+            <div class="buscador">
             <input type="text" placeholder="Buscar usuario">
-            <button type="submit">Buscar</button>
-        </form>
+            <button class="paginacion" >Buscar</button>
+            </div>
 
-        <div class="resultados">
             <p>Implementacion estática provisional. No funciona el filtrado</p>
 
             <div class="g_usuario">
-                <img src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
-                <h3>Correo: dummy@gmail.com</h3>
-                <p>Actividades: 5</p>
-                <p>País: España</p>
-                <p>Provincia: Madrid</p>
-
-                <a href="ver_perfil.php" class="btn-registrar">Ver Perfil</a>
-                <button class="btn-registrar">Eliminar</button>
-                <a href="mod_user.php" class="btn-registrar">Modificar</a>
-        </div>
+            <img src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
+                <h3>Nombre: Antonio</h3>
+                <p> Apellidos: Garcia Montana</p>
+                <a href="ver_perfil.php" class="paginacion">Ver Perfil</a>
+                <button class="logout">Eliminar</button>
+                <a href="mod_user.php" class="paginacion">Modificar</a>
+           </div>
 
 
 

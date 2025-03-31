@@ -8,23 +8,33 @@
     <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo de estilos -->
 
 </head>
+
 <body class="bg-index">
 
-        <form class="buscador">
-            <input type="text" placeholder="Buscar usuario">
-            <button type="submit">Buscar</button>
-        </form>
+        <div class="buscador">
+            <input type="text"  placeholder="Buscar usuario">
 
-        <div class="resultados">
+            <button class="paginacion">Buscar</button>
+        </div>
+
             <p>Implementacion estática provisional. No funciona el filtrado</p>
 
-            <div class="usuario">
+        <div class="usuarioAmigo">
+                <h5>¡En la lista de amigos amigos!</h5>
                 <img src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
-                <h3>Correo: dummy@gmail.com</h3>
-                <p>Actividades: 5</p>
-                <p>País: España</p>
-                <p>Provincia: Madrid</p>
-                <a href="ver_perfil.php" class="btn-registrar">Ver Perfil</a>
+                <h3>Nombre: Antonio</h3>
+                <p> Apellidos: Garcia Montana</p>
+                <button class="btn">Ultima actividad</button>
+                <a href="ver_perfilAmigo.php" class="btn">Ver Perfil</a>
+        </div>
+
+        <div class="usuarioNoAmigo">
+                <h5 id="no">¡No esta en la lista de amigos!</h5>
+                <img src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
+                <h3>Nombre: Ivan</h3>
+                <p> Apellidos: Zamorano Hernandez</p>
+                <button class="btn">Ultima actividad</button>
+                <button class="btn">Enviar solicitud de amistad</button>
         </div>
 
 </body>
