@@ -46,7 +46,7 @@
       </div>
       
       <div class="campo">
-        <label for="pais">País:</label>
+        <label for="pais">País en el que se encuentra:</label>
         <select name="pais" required>
           <option value="1" selected>España </option>
         </select>

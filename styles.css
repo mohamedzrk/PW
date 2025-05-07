@@ -3,14 +3,15 @@
     text-align: center; /*Centramos el texto*/
   }
   
-  /* Para la página index con imagen de fondo */
-  body.bg-index {
+  /* Para las paginas de usuario e iniciales, imagen de fondo */
+  .bg-index {
     background: url('DALL·E 2025-03-10 17.14.52 - A motivational sports-themed background image for a website. The image features a cool blue-toned sunrise over a running track, with an athlete tying .webp');
     background-size: cover; /*Redimensionamos la imagen para que cubra toda la pantalla*/
   }
+
   
-    /*Header*/
-    header {
+  /* cabecera y menu */
+  header {
     background-color: #357cac; /*Color de fondo del header*/
     padding: 10px;  /*Tamaño interno del header*/
     border-radius: 10px; /*Borde redondeado del header*/
@@ -19,29 +20,16 @@
     font-size: 20px; /*Tamaño de letra del header*/
   }
 
-  footer{
-    background-color: #357cac; /*Color de fondo del footer*/
-    padding: 10px;  /*Tamaño interno del footer*/
-    border-radius: 10px; /*Borde redondeado del footer*/
-    margin-top: 20px; /*Margen superior del footer*/
-    color: #b5f7e6; /*Color de letra del footer*/
-    font-size: 20px; /*Tamaño de letra del footer*/
-  }
-  
-  /*Barra de navegación*/
-   nav {
-    background-color: #4f7dd1; /*Color de fondo del nav*/
-    padding: 15px; /*Tamaño interno del nav*/
-    border-radius: 10px; /*Borde redondeado del nav*/
-    margin-bottom: 20px; /*Margen inferior del nav*/
-  }
-  
   ul {
     list-style: none; /*Quitamos los puntos de la lista*/
+    background-color: #4f7dd1; /*Color de fondo */
+    padding: 40px; /*Tamaño interno */
+    border-radius: 10px; /*Borde redondeado*/
+    margin-bottom: 20px; /*Margen inferior */
   }
   
   li {
-    display: inline; /*Mostramos los elementos de la lista horizontalmente*/
+    display: inline; 
     margin: 15px;  /*Margen entre elementos de la lista*/
   }
   
@@ -67,14 +55,63 @@
     padding: 15px;
     border-radius: 5px;
     color: white;
+    cursor: pointer;
   }
   
   .logout:hover {
     background-color: darkred;
   }
+
+
+  /*index*/
+
+  .contenedor-inicial {
+    padding: 60px;
+    background-color: #e6f7f2;
+    margin: 120px 400px ;
+    border-radius: 10px;
+    height: auto;
+  }
+
+  
+
+  
+  .btn {
+    padding: 30px; 
+    background-color: #5fa3ec;
+    color: #ffffff;
+    border: paleturquoise; /*Color del borde del botón*/
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #05386e;
+    transform: translateY(-2px); /*Efecto visual al pasar el raton*/
+  }
+
+
+  .contenedor-inicial p{
+    margin-bottom: 50px;
+  }
+
+
+  footer{
+    background-color: #357cac; /*Color de fondo del footer*/
+    padding: 10px;  /*Tamaño interno del footer*/
+    border-radius: 10px; /*Borde redondeado del footer*/
+    margin-top: 20px; /*Margen superior del footer*/
+    color: #b5f7e6; /*Color de letra del footer*/
+    font-size: 20px; /*Tamaño de letra del footer*/
+  }
+
+
   
   
-  /*Buscador de amigos*/ 
+  
+  
+  /*Buscadores */ 
   
   .buscador input {
     padding: 10px; /*Tamaño del padding del input*/
@@ -84,7 +121,7 @@
   }
   
   
-  /* GESTIÓN DE PERFIL  y registro  */
+  /* registro */
 
   .contenedor-registro {
     width: auto; /*Ancho del contenedor*/
@@ -92,11 +129,11 @@
     background: #c2e6f1;
     padding: 40px; /*Tamaño interno del contenedor*/
     border-radius: 15px;
+    display: flex; /*Mostramos los elementos de la lista horizontalmente*/
+    flex-direction: column ; /*Dirección de los elementos (columnas)*/
   }
 
   .campo {
-    display: flex; /*Mostramos los elementos en línea*/
-    flex-direction: column ; /*Dirección de los elementos (columnas)*/
     align-items: center; /*Centramos los elementos*/
     justify-content: center; /*Centramos los elementos*/
     margin-top: 20px; /*Margen superior de los elementos*/
@@ -125,19 +162,18 @@
   
 
 
-  /*  IDENTIFICACIÓN (identificación_styles.css) */
+  /*  Iniciar sesion */
   .contenedor-inicio {
     width:700px;
     height: 600px;
     margin-left: auto;
     margin-right:auto ;
-    margin-top: 100px;
     background: #b5f7e6;
     border-radius: 15px;
     display: flex;
     flex-direction: column; /* apila verticalmente */
     align-items: center;    /* centra horizontalmente */
-    margin-top: 10px;;
+    margin-top: 50px;
     text-decoration: none;
   }
 
@@ -148,53 +184,23 @@
     text-decoration: none;
   }
 
+
   .contenedor-inicio button{
     margin-top: 50px;
   }
 
-   .usuarioAmigo a, .usuarioNoAmigo a, .g_usuario a, .contenedor-actividad a, .contenedor-registro a{
+
+  /*enlaces de ciertas htmls diversos */
+   .usuarioAmigo a, .usuarioNoAmigo a, .g_usuario a, .contenedor-actividad a, .contenedor-registro a,  .contenedor-inicial a{
     color: #fcfcfc; /*Color de letra de los enlaces*/
     text-decoration: none; /*Quitamos el subrayado de los enlaces*/
+    margin: 5px;
   }
 
   
   
-  /* INICIO (index.css)*/
-  .contenedor-inicial {
-    padding: 60px;
-    background-color: #e6f7f2;
-    margin: 120px 400px ;
-    border-radius: 10px;
-  }
+  /*  INI (pagina inicial tras iniciar sesión)*/
 
-  .botones {
-    display: flex; 
-    flex-direction: row; /*Mostramos los botones en línea horizontalmente*/
-    gap: 35px; /*Espacio entre los botones*/
-    justify-content: center; /*Centramos los botones*/
-  }
-  
-
-  
-  .btn {
-    padding: 30px; 
-    background-color: #5fa3ec;
-    color: #ffffff;
-    border: paleturquoise; /*Color del borde del botón*/
-    font-size: 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn:hover {
-    background-color: #05386e;
-    transform: translateY(-2px); /*Efecto visual al pasar el raton*/
-  }
-  
-  /*  INI (ini.css)*/
-
-  
- 
   .contenido {
     margin-top: 100px;
     background: white;
@@ -215,23 +221,23 @@
   }
 
   
-  /*  PUBLICAR ACTIVIDAD (pub_act.css) */
+  /*  PUBLICAR ACTIVIDAD */
   .contenedor-actividad {
     width: 600px;
     margin: 100px 400px;
     background: #b5f7e6;
     padding: 40px;  /* espacio alrededor del contenido */
     border-radius: 15px;
+    display: flex;
+    flex-direction: column; /* apila verticalmente */
+    
   }
-  
-
-  
   
   
   
   /*  TABLÓN (tablón.css)  */
 
-  
+  /*Boton mas pequeño (usado frecuentemente) */
   .paginacion {
     margin-top: 20px;
     background-color: #2980b9;
@@ -247,7 +253,41 @@
     transform: translateY(-2px);
   }
 
+  .actividad {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    width: 1400px;
+    height: 200px; 
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-left: 35px;
+    gap: 60px; /* Espacio entre el texto y las imágenes */
+  }
+  
+  
+  
+  
+  .imagenes-actividad {
+    display: flex;  /* Coloca las imágenes una al lado de otra */
+    gap: 10px;
+  }
+  
+  
+  .imagenes-actividad img {
+    width: 150px;   
+    height: 150px;  
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .imagenes-actividad img:hover {
+    transform: scale(1.10);
+  }
 
+
+/* bUscador usuarios*/ 
 
 /* Usuario simulado */
 .usuarioAmigo,
@@ -263,7 +303,7 @@
   border-radius: 10px;
   margin-bottom: 10px;
   margin-left: 190px;
-  gap: 30px; /* Espacio entre la imagen y el texto */
+  gap: 30px; /* Espacio entre los elementos */
 }
 
 /* Imagen del usuario */
@@ -275,6 +315,9 @@
   border-radius: 50%; /* Hace la imagen circular */
 }
 
+
+/*ver perfil de usuario amigo*/
+
 .perfil{
   background-color: #a1ceec;
   width: auto;
@@ -283,7 +326,7 @@
   margin-left: 400px;
   margin-right: 400px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* apila verticalmente */
   align-items: center;
   margin-top: 50px;
   margin-bottom: 50px;
@@ -303,44 +346,16 @@
 
 
 
-.actividad {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  border-radius: 8px;
-  width: 1400px;
-  height: 200px; 
-  padding: 20px;
-  margin-bottom: 20px;
-  margin-left: 35px;
-  gap: 60px; /* Espacio entre el texto y las imágenes */
-}
 
 
-
-
-.imagenes-actividad {
-  display: flex;  /* Coloca las imágenes una al lado de otra */
-  gap: 10px;
-}
-
-
-.imagenes-actividad img {
-  width: 150px;   
-  height: 150px;  
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.imagenes-actividad img:hover {
-  transform: scale(1.10);
-}
-
-
-body.bg-admin {
+/*fonde para página de admin */
+.bg-admin {
   background: url('top-view-international-worker-s-day-with-engineer-tools.jpg');
   background-size: cover; /*Redimensionamos la imagen para que cubra toda la pantalla*/
 }
+
+
+/*gestion de usuarios*/
 
 .g_usuario {
   display: flex; /* Cambiado a flex para alinear imagen y texto en fila */
@@ -350,7 +365,7 @@ body.bg-admin {
   background-color: #ffffff;
   width: 900px;
   height: 200px; /* Ajuste automático según el contenido */
-  color: rgb(0, 0, 0);
+  color: #010508;
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -359,10 +374,8 @@ body.bg-admin {
 }
 
 
-/* ================================
-   LISTADO DE ÍTEMS
-================================ */
 
+/*Para que todos los h1 de la página tengan un estilo distinto*/
 .bg-admin h1 {
   color: #022136;
   background: #fffefe;
@@ -370,11 +383,13 @@ body.bg-admin {
 }
 
 
+
+/*gestion de items*/
 .listado-items {
   background: #81cee6;
   padding: 20px;
   margin: 50px 250px;
-  max-width: 800px;
+  width: 800px;
   border-radius: 10px;
   text-align: center;
   margin-left: 300px;
@@ -397,10 +412,10 @@ body.bg-admin {
 }
 
 
-
+/*estilo de cuando seleccionas un tipo de item contendor en el que se listan para editar o eliminar*/
 .tipoItem{
   background: #ffffff;
-  padding: 20px;
+  padding: 20px; /* Espacio alrededor del contenido */
   margin-bottom: 20px;
   border-radius: 10px;
   width: 400px;
@@ -413,40 +428,30 @@ body.bg-admin {
   margin-bottom: 50px;
 }
 
-#imagen2,
-#imagen3, #imagen4, #imagen5 {
-  width: 300px;
-  height: 200px;
-  border-radius: 0px;
-}
 
+
+
+
+/*para que al hacer click en la imagen se agranden*/
 #imagen1:active, 
 #imagen2:active, 
 #imagen3:active, 
 #imagen4:active, 
 #imagen5:active,
 #imagen6:active,
-#imagen7:active {
+#imagen7:active,
+#imagen8:active,
+#imagen9:active,
+#imagen10:active,
+#imagen11:active,
+#imagen12:active{
   transform: scale(2); /* Efecto de zoom al hacer clic */
 }
 
+/*para distinguir usuarios amigos de no amigos*/
 .usuarioAmigo h5{
   color: #357cac;
 }
 #no{
   color: #921717;
-}
-
-.bg-admin .logout {
-  background-color: #d81010;
-  cursor: pointer;
-  border-radius: 9px;
-  width: 80px;
-  height: 45px;
-  color: white;
-}
-
-.bg-admin .logout:hover {
-  background-color: #a81010;
-  transform: translateY(-2px); /*Efecto visual al pasar el raton*/
 }

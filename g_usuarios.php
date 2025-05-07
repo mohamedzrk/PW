@@ -19,16 +19,14 @@
             <p>Implementacion estática provisional. No funciona el filtrado</p>
 
             <div class="g_usuario">
-            <img src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
+            <img id="imagen10" src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
                 <h3>Nombre: Antonio</h3>
                 <p> Apellidos: Garcia Montana</p>
-                <a href="ver_perfil.php" class="paginacion">Ver Perfil</a>
+                <a href="ver_perfilAmigo.php" class="paginacion">Ver Perfil</a>
                 <button class="logout">Eliminar</button>
                 <a href="mod_user.php" class="paginacion">Modificar</a>
            </div>
-
-
-
+           
 
 
 </body>

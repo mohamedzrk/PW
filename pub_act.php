@@ -43,13 +43,13 @@
           <option value="1">Usuario 1</option>
           <option value="2">Usuario 2</option>
           <option value="3">Usuario 3</option>
-          <option value="+4">Usuario 4</option>
+          <option value="4">Usuario 4</option>
         </select>
       </div>
       
       <div class="campo">
         <label for="imagenes">Imágenes:</label>
-        <input type="file" name="imagenes" accept="image" multiple>
+        <input type="file" name="imagenes" accept=".jpg" multiple>
       </div>
       
       <button class="btn">Publicar Actividad</button>

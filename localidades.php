@@ -42,7 +42,4 @@
                 <a class="paginacion">Modificar</a>
         </div>
 
-
-
-
 </body>

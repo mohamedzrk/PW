@@ -22,7 +22,7 @@
            <div class="tipoItem">
                 <h3>Nombre: Carrera</h3>
                 <button class="logout">Eliminar</button>
-                <a class="paginacion">Editar</a>
+                <a class="paginacion">Modificar</a>
         </div>
 
         <div class="tipoItem">

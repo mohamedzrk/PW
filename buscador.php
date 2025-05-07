@@ -4,8 +4,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">  
-    <title>Buscador de Usuarios</title> <!-- Titulo que se vera en la pestaña del navegador -->
-    <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo de estilos -->
+    <title>Buscador de Usuarios</title> 
+    <link rel="stylesheet" href="styles.css"> 
 
 </head>
 
@@ -21,7 +21,7 @@
 
         <div class="usuarioAmigo">
                 <h5>¡En la lista de amigos amigos!</h5>
-                <img src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
+                <img id="imagen11" src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
                 <h3>Nombre: Antonio</h3>
                 <p> Apellidos: Garcia Montana</p>
                 <button class="btn">Ultima actividad</button>
@@ -30,7 +30,7 @@
 
         <div class="usuarioNoAmigo">
                 <h5 id="no">¡No esta en la lista de amigos!</h5>
-                <img src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
+                <img id="imagen12" src="ZLbZBbSTUCTe8Da5-generated_image.jpg" alt="Foto_pred.png">
                 <h3>Nombre: Ivan</h3>
                 <p> Apellidos: Zamorano Hernandez</p>
                 <button class="btn">Ultima actividad</button>

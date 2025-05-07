@@ -34,11 +34,10 @@
       <div class="campo">
         <label for="tipoActividad">Tipo de Actividad Preferida:</label>
         <select name="tipoActividad" required>
-          <option value="">Seleccione...</option>
-          <option value="ciclismoRuta" selected>Ciclismo en Ruta</option>
-          <option value="ciclismoMTB">Ciclismo MTB</option>
-          <option value="senderismo">Senderismo</option>
-          <option value="carrera">Carrera</option>
+          <option value="1" selected>Ciclismo en Ruta</option>
+          <option value="2">Ciclismo MTB</option>
+          <option value="3">Senderismo</option>
+          <option value="4">Carrera</option>
         </select>
       </div>
       
@@ -48,12 +47,11 @@
       </div>
       
       <div class="campo">
-        <label for="pais">País:</label>
+        <label for="pais">País en el que se encuentra:</label>
         <select name="pais" required>
-          <option value="">Seleccione País</option>
-          <option value="España" selected>España </option>
-          <option value="Francia">Francia</option>
-          <option value="Alemania">Alemania</option>
+          <option value="1" selected>España </option>
+          <option value="2">Francia</option>
+          <option value="3">Alemania</option>
         </select>
       </div>
 
@@ -62,18 +60,16 @@
       <div class="campo">
         <label for="provincia">Provincia:</label>
         <select name="provincia" required>
-          <option value="">Seleccione Provincia</option>
-          <option value="Madrid" selected>Madrid</option>
-          <option value="Barcelona">Barcelona</option>
+          <option value="1" selected>Madrid</option>
+          <option value="2">Barcelona</option>
         </select>
       </div>
       
       <div class="campo">
         <label for="localidad">Localidad:</label>
         <select name="localidad" required>
-          <option value="">Seleccione Localidad</option>
-          <option value="Alcobendas" selected>Alcobendas</option>
-          <option value="Móstoles">Móstoles</option>
+          <option value="1" selected>Alcobendas</option>
+          <option value="2">Móstoles</option>
         </select>
       </div>
 
