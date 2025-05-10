@@ -16,7 +16,7 @@
     <p>Complete el siguiente formulario para publicar una nueva actividad.</p>
 
     
-    <form action="ini.php">
+    <form action="guardar_actividad.php" method="post" enctype="multipart/form-data">
       <div class="campo">
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" placeholder="Título de la actividad" required>

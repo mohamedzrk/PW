@@ -455,3 +455,11 @@
 #no{
   color: #921717;
 }
+
+.mapa-actividad {
+    height: 100px;
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}

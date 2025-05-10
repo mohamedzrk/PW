@@ -1,3 +1,51 @@
+<?php
+// register.php
+include 'db.php';  // Aquí defines $conn = mysqli_connect(...)
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // 1) Recoger y escapar datos
+    $nombre    = mysqli_real_escape_string($conn, trim($_POST['nombre']));
+    $apellidos = mysqli_real_escape_string($conn, trim($_POST['apellidos']));
+    $email     = mysqli_real_escape_string($conn, trim($_POST['correo']));
+    $pass1     = $_POST['password'];
+    $pass2     = $_POST['password2'];
+    $fecha     = $_POST['fecha_nacimiento'];
+    $pais      = (int) $_POST['pais'];
+    $provincia = (int) $_POST['provincia'];
+    $localidad = (int) $_POST['localidad'];
+    $actividad = (int) $_POST['actividad'];
+
+    // 2) Validaciones básicas
+    if (!$nombre || !$apellidos || !$email || !$pass1 || !$pass2) {
+        die('Faltan datos obligatorios.');
+    }
+    if ($pass1 !== $pass2) {
+        die('Las contraseñas no coinciden.');
+    }
+
+    
+
+
+    // 4) Insertar en la base de datos
+    $sql = "
+      INSERT INTO usuario
+        (nombre, apellidos, email, password, fecha_nacimiento,
+         pais_id, provincia_id, localidad_id, tipo_actividad_id)
+      VALUES
+        ('$nombre', '$apellidos', '$email', '$pass_md5', '$fecha',
+         $pais, $provincia, $localidad, $actividad)
+    ";
+    if (!mysqli_query($conn, $sql)) {
+        die('Error al registrar usuario: ' . mysqli_error($conn));
+    }
+
+    // 5) Redirigir al login
+    header('Location: identificación.html');
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,9 +57,6 @@
 
 <body class="bg-index">
 
-
- 
-
   <div class="contenedor-registro">
    
     <h1>
@@ -20,7 +65,7 @@
 
 
     <!-- Formulario de registro -->
-    <form action="identificación.html" > 
+    <form action="register.php" method="post"> 
      
       <div class="campo">
         <label for="nombre">Nombre</label>
@@ -100,7 +145,7 @@
       </div>
 
      
-      <button class="btn">Registrarse</button>
+      <button class="btn" type="submit">Registrarse</button>
       </form>
      
   </div>
