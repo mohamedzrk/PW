@@ -463,3 +463,44 @@
     border: 1px solid #ccc;
     border-radius: 8px;
 }
+
+
+.contenedor-ws{
+  width: 800px;                
+  max-width: 90%;               
+  margin: 80px auto;            
+  background: #c2e6f1;         
+  padding: 35px 25px;
+  border-radius: 15px;
+}
+.contenedor-ws h1{
+  margin-bottom: 30px;
+  color: #0056b3;
+}
+
+.msg-error{ 
+  color: red; 
+  margin: 1rem 0; 
+}
+
+
+.tabla-ws{
+  width: 100%;
+  margin-top: 15px;
+}
+.tabla-ws thead{
+  background: #357cac;          
+  color: #fff;
+}
+
+
+.usuario {
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#results {
+  background-color: #81cee6;
+}
