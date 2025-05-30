@@ -1,75 +1,91 @@
 <?php
-include 'db.php'; // Incluir conexión a la base de datos
+// pub_act.php
+include 'db.php';
+session_start();
 
-session_start(); // Iniciar sesión
-
-// Verificar que el usuario esté logueado
+// 1) Comprobar que hay sesión
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: identificacion.php');
     exit;
 }
+$usuario_id = (int) $_SESSION['usuario_id'];
 
-$usuario_id = $_SESSION['usuario_id']; // ID del usuario que publica la actividad
+// 2) Procesar formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // 2.1) Datos básicos
+    $titulo        = $_POST['titulo'];
+    $tipoActividad = (int) $_POST['tipoActividad'];
+    $fecha         = date('Y-m-d H:i:s');
 
-// Verificar si el formulario ha sido enviado
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Obtener los datos del formulario
-    $titulo = $_POST['titulo'];
-    $tipo_actividad_id = $_POST['tipoActividad'];
-    $companeros = $_POST['companeros']; // Compañeros seleccionados
-    $fecha = date("Y-m-d H:i:s"); // Fecha y hora de la actividad
-
-    // Subida del archivo GPX
-    if (isset($_FILES['rutaGPX']) && $_FILES['rutaGPX']['error'] == 0) {
-        $rutaGPX = $_FILES['rutaGPX'];
-        $ext = pathinfo($rutaGPX['name'], PATHINFO_EXTENSION);
-        $filePath = 'uploads/gpx/' . time() . '.' . $ext;
-
-        // Mover archivo GPX a la carpeta correspondiente
-        if (!move_uploaded_file($rutaGPX['tmp_name'], $filePath)) {
-            die("Error al subir el archivo GPX");
-        }
+    // 2.2) Subir GPX
+    if (isset($_FILES['rutaGPX']) && $_FILES['rutaGPX']['error'] === 0) {
+        $ext      = pathinfo($_FILES['rutaGPX']['name'], PATHINFO_EXTENSION);
+        $nombreGPX = time() . '.' . $ext;
+        // Asegúrate de que exista uploads/gpx
+        if (!is_dir('uploads/gpx')) mkdir('uploads/gpx', 0755, true);
+        move_uploaded_file($_FILES['rutaGPX']['tmp_name'], "uploads/gpx/$nombreGPX");
+        $rutaGpx = "uploads/gpx/$nombreGPX";
     } else {
-        die("Debe subir un archivo GPX");
+        die('Error al subir el archivo GPX');
     }
 
-    // Insertar la actividad en la base de datos
-    $sql = "INSERT INTO actividad (usuario_id, titulo, tipo_actividad_id, fecha, ruta_gpx) 
-            VALUES ($usuario_id, '$titulo', $tipo_actividad_id, '$fecha', '$filePath')";
-
-    if (!$mysqli->query($sql)) {
-        die("Error al guardar la actividad: " . $mysqli->error);
-    }
-
-    // Obtener el ID de la actividad recién insertada
+    // 2.3) Insertar actividad
+    $mysqli->query("
+        INSERT INTO actividad (usuario_id, titulo, tipo_actividad_id, fecha)
+        VALUES ($usuario_id, '$titulo', $tipoActividad, '$fecha')
+    ") or die("Error al guardar actividad: " . $mysqli->error);
     $actividad_id = $mysqli->insert_id;
 
-    // Asociar los compañeros de la actividad
-    foreach ($companeros as $compañero_id) {
-        $sql_com = "INSERT INTO compania (actividad_id, usuario_id) VALUES ($actividad_id, $compañero_id)";
-        $mysqli->query($sql_com);
+    // 2.4) Guardar GPX en rutas
+    $mysqli->query("
+        INSERT INTO rutas (actividad_id, archivo)
+        VALUES ($actividad_id, '$rutaGpx')
+    ") or die("Error al guardar ruta GPX: " . $mysqli->error);
+
+    // 2.5) Asociar compañeros
+    if (!empty($_POST['companeros'])) {
+        foreach ($_POST['companeros'] as $cid) {
+            $cid = (int)$cid;
+            $mysqli->query("
+                INSERT INTO compania (actividad_id, usuario_id)
+                VALUES ($actividad_id, $cid)
+            ");
+        }
     }
 
-    // Subida de imágenes (si las hay)
-    if (isset($_FILES['imagenes']) && !empty($_FILES['imagenes']['name'][0])) {
-        $imagenes = $_FILES['imagenes'];
-
-        foreach ($imagenes['tmp_name'] as $index => $tmpName) {
-            $imagenPath = 'uploads/imagenes/' . time() . $index . '.' . pathinfo($imagenes['name'][$index], PATHINFO_EXTENSION);
-            if (move_uploaded_file($tmpName, $imagenPath)) {
-                $sql_img = "INSERT INTO imagenes (actividad_id, ruta) VALUES ($actividad_id, '$imagenPath')";
-                $mysqli->query($sql_img);
+    // 2.6) Subir imágenes
+    if (!empty($_FILES['imagenes']['name'][0])) {
+        // Asegúrate de que exista uploads/imagenes
+        if (!is_dir('uploads/imagenes')) mkdir('uploads/imagenes', 0755, true);
+        foreach ($_FILES['imagenes']['tmp_name'] as $i => $tmp) {
+            if ($_FILES['imagenes']['error'][$i] === 0) {
+                $extImg  = pathinfo($_FILES['imagenes']['name'][$i], PATHINFO_EXTENSION);
+                $imgName = time() . "_$i." . $extImg;
+                $imgPath = "uploads/imagenes/$imgName";
+                move_uploaded_file($tmp, $imgPath);
+                $mysqli->query("
+                    INSERT INTO imagenes (actividad_id, ruta)
+                    VALUES ($actividad_id, '$imgPath')
+                ");
             }
         }
     }
 
-    header('Location: tablón.php'); // Redirigir al tablón de actividades
+    // 2.7) Redirigir al tablón
+    header('Location: tablón.php');
     exit;
 }
+
+// 3) Cargar datos para el formulario
+$tipos     = $mysqli->query("SELECT id, nombre FROM tipo_actividad ORDER BY nombre");
+$usuarios  = $mysqli->query("
+    SELECT id, nombre, apellidos
+    FROM usuario
+    WHERE id <> $usuario_id
+    ORDER BY nombre
+");
 ?>
-
 <?php include 'header.php'; ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -78,51 +94,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-index">
-
   <div class="contenedor-actividad">
     <h1>Publicar Actividad</h1>
-    <p>Complete el siguiente formulario para publicar una nueva actividad.</p>
+    <form method="post" enctype="multipart/form-data">
 
-    <!-- Formulario para publicar actividad -->
-    <form action="publicar_actividad.php" method="post" enctype="multipart/form-data">
       <div class="campo">
-        <label for="titulo">Título:</label>
-        <input type="text" name="titulo" placeholder="Título de la actividad" required>
+        <label>Título:</label>
+        <input type="text" name="titulo" required>
       </div>
 
       <div class="campo">
-        <label for="tipoActividad">Tipo de Actividad:</label>
+        <label>Tipo de Actividad:</label>
         <select name="tipoActividad" required>
-          <option value="1">Ciclismo en Ruta</option>
-          <option value="2">Ciclismo MTB</option>
-          <option value="3">Senderismo</option>
-          <option value="4">Carrera</option>
+          <option value="">--</option>
+          <?php while ($t = $tipos->fetch_assoc()): ?>
+            <option value="<?= $t['id'] ?>"><?= $t['nombre'] ?></option>
+          <?php endwhile; ?>
         </select>
       </div>
 
       <div class="campo">
-        <label for="rutaGPX">Ruta (archivo GPX):</label>
+        <label>Ruta (archivo GPX):</label>
         <input type="file" name="rutaGPX" accept=".gpx" required>
       </div>
 
       <div class="campo">
-        <label for="companeros">Compañeros de Actividad:</label>
+        <label>Compañeros:</label>
         <select name="companeros[]" multiple>
-          <option value="1">Usuario 1</option>
-          <option value="2">Usuario 2</option>
-          <option value="3">Usuario 3</option>
-          <option value="4">Usuario 4</option>
+          <?php while ($u = $usuarios->fetch_assoc()): ?>
+            <option value="<?= $u['id'] ?>">
+              <?= $u['nombre'] . ' ' . $u['apellidos'] ?>
+            </option>
+          <?php endwhile; ?>
         </select>
       </div>
 
       <div class="campo">
-        <label for="imagenes">Imágenes:</label>
+        <label>Imágenes:</label>
         <input type="file" name="imagenes[]" accept=".jpg,.jpeg,.png" multiple>
       </div>
 
-      <button class="btn">Publicar Actividad</button>
+      <button class="btn" type="submit">Publicar Actividad</button>
     </form>
-
   </div>
 </body>
 </html>

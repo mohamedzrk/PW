@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="ChatGPT" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>Ruta de Senderismo</name>
+    <desc>Ejemplo de archivo GPX con una ruta de senderismo.</desc>
+    <author>
+      <name>ChatGPT</name>
+    </author>
+  </metadata>
+  <trk>
+    <name>Ruta de Montaña</name>
+    <trkseg>
+      <trkpt lat="37.7749" lon="-122.4194">
+        <ele>10</ele>
+        <time>2025-03-12T10:00:00Z</time>
+      </trkpt>
+      <trkpt lat="37.7755" lon="-122.4185">
+        <ele>15</ele>
+        <time>2025-03-12T10:05:00Z</time>
+      </trkpt>
+      <trkpt lat="37.7760" lon="-122.4170">
+        <ele>20</ele>
+        <time>2025-03-12T10:10:00Z</time>
+      </trkpt>
+      <trkpt lat="37.7770" lon="-122.4150">
+        <ele>30</ele>
+        <time>2025-03-12T10:20:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

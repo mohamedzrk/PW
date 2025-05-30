@@ -1,40 +1,85 @@
 <?php
+// buscador.php
 include 'db.php';
+session_start();
 
-// Verificar que el usuario está autenticado
+// 1) Asegurarnos de que el usuario está logueado
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: identificacion.php');
     exit;
 }
+$me = (int) $_SESSION['usuario_id'];
 
-$me = (int) $_SESSION['usuario_id'];  // Obtener el ID del usuario actual
-$q = isset($_GET['q']) ? trim($_GET['q']) : '';  // Obtener el término de búsqueda
+// 2) Procesar añadir/quitar amistad
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // añadir amigo
+    if (isset($_POST['add_friend'])) {
+        $aid = (int)$_POST['add_friend'];
+        $mysqli->query(
+          "INSERT INTO amistad (usuario_id, amigo_id, estado)
+           VALUES ($me, $aid, 'aceptado')
+           ON DUPLICATE KEY UPDATE estado='aceptado'"
+        );
+    }
+    // quitar amigo
+    if (isset($_POST['remove_friend'])) {
+        $rid = (int)$_POST['remove_friend'];
+        $mysqli->query(
+          "DELETE FROM amistad
+           WHERE (usuario_id=$me AND amigo_id=$rid)
+              OR (usuario_id=$rid AND amigo_id=$me)"
+        );
+    }
+    // recargar misma búsqueda
+    $q    = $_POST['q']    ?? '';
+    $page = (int)($_POST['page'] ?? 1);
+    header("Location: buscador.php?q=$q&page=$page");
+    exit;
+}
 
-$usuarios = [];  // Array para almacenar los usuarios encontrados
+// 3) Leer parámetros de búsqueda y paginación
+$q     = $_GET['q']    ?? '';
+$page  = max(1, (int)($_GET['page'] ?? 1));
+$limit = 10;
+$off   = ($page - 1) * $limit;
 
-// Si hay un término de búsqueda
+// 4) Contar resultados totales
+$total = 0;
+if ($q !== '') {
+    $res  = $mysqli->query(
+      "SELECT COUNT(*) AS c
+       FROM usuario
+       WHERE (nombre LIKE '%$q%' OR apellidos LIKE '%$q%')
+         AND id <> $me"
+    );
+    $total = $res->fetch_assoc()['c'];
+}
+
+// 5) Traer página de resultados junto con estado de amistad
+$usuarios = [];
 if ($q !== '') {
     $sql = "
-      SELECT u.id, u.nombre, u.apellidos, u.foto,
-        EXISTS(
-          SELECT 1 FROM amistad a
-          WHERE (a.usuario_id=$me AND a.amigo_id=u.id)
-             OR (a.usuario_id=u.id AND a.amigo_id=$me)
-        ) AS es_amigo
+      SELECT 
+        u.id, u.nombre, u.apellidos, u.foto,
+        (f.id IS NOT NULL) AS es_amigo
       FROM usuario u
-      WHERE u.nombre LIKE '%$q%' OR u.apellidos LIKE '%$q%'
+      LEFT JOIN amistad f
+        ON (f.usuario_id = $me AND f.amigo_id = u.id)
+        OR (f.usuario_id = u.id AND f.amigo_id = $me)
+      WHERE (u.nombre LIKE '%$q%' OR u.apellidos LIKE '%$q%')
+        AND u.id <> $me
       ORDER BY u.nombre, u.apellidos
-      LIMIT 50
+      LIMIT $limit OFFSET $off
     ";
-
-    $res = $mysqli->query($sql);  // Ejecutar la consulta
-    while ($row = $res->fetch_assoc()) {
-        $usuarios[] = $row;  // Añadir el usuario encontrado al array
+    $r = $mysqli->query($sql);
+    while ($row = $r->fetch_assoc()) {
+        $usuarios[] = $row;
     }
 }
-?>
-<?php include 'header.php'; ?> <!-- Incluir el encabezado -->
 
+// 6) Mostrar resultados
+include 'header.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -43,37 +88,62 @@ if ($q !== '') {
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-index">
+
   <!-- Formulario de búsqueda -->
   <div class="buscador">
     <form method="get" action="buscador.php">
-      <input type="text" name="q" placeholder="Buscar usuario" value="<?= $q ?>">
+      <input
+        type="text"
+        name="q"
+        placeholder="Buscar usuario"
+        value="<?=$q?>"
+      >
       <button class="paginacion">Buscar</button>
     </form>
   </div>
 
-  <!-- Mostrar mensaje si no se encuentran usuarios -->
+  <!-- Mensaje si no hay resultados -->
   <?php if ($q !== '' && empty($usuarios)): ?>
-    <p>No se encontraron usuarios para "<?= $q ?>".</p>
+    <p>No se encontraron usuarios para "<?=$q?>".</p>
   <?php endif; ?>
 
-  <!-- Mostrar los usuarios encontrados -->
+  <!-- Listado de usuarios -->
   <?php foreach ($usuarios as $u): ?>
-    <div class="<?= $u['es_amigo'] ? 'usuarioAmigo' : 'usuarioNoAmigo' ?>">
-      <!-- Foto de perfil, si no tiene foto, usar predeterminada.webp -->
-      <?php 
-      $foto = $u['foto'] ?: 'C:\xampp\htdocs\PracticaWeb\uploads\default.png';  // Si no tiene foto, usa la predeterminada
-      ?>
+    <div class="<?=$u['es_amigo']?'usuarioAmigo':'usuarioNoAmigo'?>">
+      <?php $foto = $u['foto'] ?: 'uploads/default.png'; ?>
+      <img src="<?=$foto?>" class="avatar">
+      <h3><?=$u['nombre']?> <?=$u['apellidos']?></h3>
 
-      <img src="<?= $foto ?>" alt="C:\xampp\htdocs\PracticaWeb\uploads\default.png" class="avatar">
-      <h3><?= $u['nombre'].' '.$u['apellidos'] ?></h3>
-
-      <!-- Enlace para ver el perfil del amigo -->
-      <a href="ver_perfilAmigo.php?id=<?= $u['id'] ?>" class="btn">Ver Perfil</a>
-
-      <!-- Opciones para gestionar amistad (dummies por ahora) -->
-      <a href="#" class="btn">Enviar Solicitud</a>
-      <a href="#" class="btn logout">Anular Amistad</a>
+      <!-- Si es amigo, mostrar Ver Perfil y Anular -->
+      <?php if ($u['es_amigo']): ?>
+        <a href="ver_perfilAmigo.php?id=<?=$u['id']?>" class="btn">Ver Perfil</a>
+        <form method="post" style="display:inline">
+          <input type="hidden" name="remove_friend" value="<?=$u['id']?>">
+          <input type="hidden" name="q"             value="<?=$q?>">
+          <input type="hidden" name="page"          value="<?=$page?>">
+          <button class="btn logout" type="submit">Anular Amistad</button>
+        </form>
+      <!-- Si no, mostrar Enviar Solicitud -->
+      <?php else: ?>
+        <form method="post" style="display:inline">
+          <input type="hidden" name="add_friend" value="<?=$u['id']?>">
+          <input type="hidden" name="q"          value="<?=$q?>">
+          <input type="hidden" name="page"       value="<?=$page?>">
+          <button class="btn" type="submit">Enviar Solicitud</button>
+        </form>
+      <?php endif; ?>
     </div>
   <?php endforeach; ?>
+
+  <!-- Paginación -->
+  <div class="paginacion">
+    <?php if ($page > 1): ?>
+      <a href="buscador.php?q=<?=$q?>&page=<?=$page-1?>" class="paginacion">Anterior</a>
+    <?php endif; ?>
+    <?php if ($page * $limit < $total): ?>
+      <a href="buscador.php?q=<?=$q?>&page=<?=$page+1?>" class="paginacion">Siguiente</a>
+    <?php endif; ?>
+  </div>
+
 </body>
 </html>
