@@ -206,6 +206,7 @@ while ($r = $q->fetch_assoc()) $actividades[] = $r;
     </form>
   </div>
 
+
   <script>
     // Referencia a los elementos del formulario
     const pais     = document.getElementById('pais'); // País
@@ -216,6 +217,7 @@ while ($r = $q->fetch_assoc()) $actividades[] = $r;
     const prov     = document.getElementById('provincia');  // Select provincia
     const loc      = document.getElementById('localidad'); // Select localidad
 
+    
     // Carga provincias de España
     function loadProvincias() { 
       fetch('registro.php?prov_list=1') // Llama al endpoint AJAX
