@@ -1,6 +1,12 @@
 <?php
-// registro.php
+
 include 'db.php';
+
+// Si no hay sesión iniciada, redirigir al login
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: identificacion.php');
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1) Datos del formulario
@@ -56,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// 4) Datos para el formulario
+// Datos para el formulario
 $paises      = $mysqli->query("SELECT id, nombre FROM paises ORDER BY nombre");
 $actividades = $mysqli->query("SELECT id, nombre FROM tipo_actividad ORDER BY nombre");
 
@@ -70,7 +76,7 @@ while ($row = $prov_res->fetch_assoc()) {
 }
 
 $localidades_data = [];
-if (count($prov_ids)) {
+
     $in = implode(',', $prov_ids);
     $loc_res = $mysqli->query(
       "SELECT id, nombre, provincia_id 
@@ -81,7 +87,7 @@ if (count($prov_ids)) {
     while ($r = $loc_res->fetch_assoc()) {
         $localidades_data[$r['provincia_id']][] = $r;
     }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -90,6 +96,7 @@ if (count($prov_ids)) {
   <title>Registro</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="bg-index">
   <div class="contenedor-registro">
     <h1>Regístrate ¡GRATIS!</h1>
@@ -99,47 +106,54 @@ if (count($prov_ids)) {
         <label>Nombre</label>
         <input name="nombre" required>
       </div>
+
       <div class="campo">
         <label>Apellidos</label>
         <input name="apellidos" required>
       </div>
+
       <div class="campo">
         <label>Correo</label>
         <input type="email" name="correo" required>
       </div>
+
       <div class="campo">
         <label>Contraseña</label>
         <input type="password" name="password" required>
       </div>
+
       <div class="campo">
         <label>Repite Contraseña</label>
         <input type="password" name="password2" required>
       </div>
+
       <div class="campo">
         <label>Fecha de nacimiento</label>
         <input type="date" name="fecha_nacimiento" required>
       </div>
+
       <div class="campo">
         <label>País</label>
         <select id="pais" name="pais" required>
           <option value="">--</option>
           <?php while ($p = $paises->fetch_assoc()): ?>
-            <option value="<?= $p['id'] ?>"><?= $p['nombre'] ?></option>
+            <option value="<?= $p['id'] ?>">  <?= $p['nombre'] ?>  </option>
           <?php endwhile; ?>
         </select>
       </div>
+
       <div class="campo">
         <label>Actividad favorita</label>
         <select name="actividad" required>
           <option value="">--</option>
           <?php while ($a = $actividades->fetch_assoc()): ?>
-            <option value="<?= $a['id'] ?>"><?= $a['nombre'] ?></option>
+            <option value="<?= $a['id'] ?>">   <?= $a['nombre'] ?>   </option>
           <?php endwhile; ?>
         </select>
       </div>
 
       <!-- Bloque para España -->
-      <div id="bloque-espana" style="display:none">
+      <div id="bloque-espana" >
         <div class="campo">
           <label>Provincia (España)</label>
           <select id="provincia" name="provincia"></select>
@@ -151,7 +165,7 @@ if (count($prov_ids)) {
       </div>
 
       <!-- Bloque resto de países -->
-      <div id="bloque-resto" style="display:none">
+      <div id="bloque-resto">
         <div class="campo">
           <label>Provincia</label>
           <input name="provincia_text">
@@ -180,9 +194,11 @@ if (count($prov_ids)) {
         esp.style.display = 'block';
         res.style.display = 'none';
         provSel.innerHTML = '<option value="">--</option>';
+
         provincias.forEach(function(p) {
           provSel.add(new Option(p.nombre, p.id));
         });
+
         provSel.onchange();
       } else {
         esp.style.display = 'none';

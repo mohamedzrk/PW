@@ -1,13 +1,13 @@
 <?php
 // buscador.php
 include 'db.php';
-session_start();
 
-// 1) Asegurarnos de que el usuario está logueado
+// Si no hay sesión iniciada, redirigir al login
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: identificacion.php');
     exit;
 }
+
 $me = (int) $_SESSION['usuario_id'];
 
 // 2) Procesar añadir/quitar amistad
@@ -117,18 +117,31 @@ include 'header.php';
       <!-- Si es amigo, mostrar Ver Perfil y Anular -->
       <?php if ($u['es_amigo']): ?>
         <a href="ver_perfilAmigo.php?id=<?=$u['id']?>" class="btn">Ver Perfil</a>
-        <form method="post" style="display:inline">
-          <input type="hidden" name="remove_friend" value="<?=$u['id']?>">
-          <input type="hidden" name="q"             value="<?=$q?>">
-          <input type="hidden" name="page"          value="<?=$page?>">
+        <form method="post" >
+          
+          <input type="hidden" name="remove_friend" 
+          value="<?=$u['id']?>">
+
+          <input type="hidden" name="q"             
+          value="<?=$q?>">
+
+          <input type="hidden" name="page"          
+          value="<?=$page?>">
           <button class="btn logout" type="submit">Anular Amistad</button>
         </form>
+
       <!-- Si no, mostrar Enviar Solicitud -->
       <?php else: ?>
-        <form method="post" style="display:inline">
-          <input type="hidden" name="add_friend" value="<?=$u['id']?>">
-          <input type="hidden" name="q"          value="<?=$q?>">
-          <input type="hidden" name="page"       value="<?=$page?>">
+        <form method="post" >
+          <input type="hidden" name="add_friend" 
+          value="<?=$u['id']?>">
+
+          <input type="hidden" name="q"
+          value="<?=$q?>">
+
+          <input type="hidden" name="page"       
+          value="<?=$page?>">
+
           <button class="btn" type="submit">Enviar Solicitud</button>
         </form>
       <?php endif; ?>

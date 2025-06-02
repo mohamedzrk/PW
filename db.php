@@ -1,6 +1,6 @@
 <?php
-// db.php — Conexión básica con mysqli
-session_start();
+
+session_start(); 
 
 // Datos de conexión
 $DB_HOST = 'localhost';

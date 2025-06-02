@@ -1,9 +1,8 @@
 <?php
-// tablon.php
+// tablón.php
 include 'db.php';
-session_start();
 
-// 1) Sesión
+// Si no hay sesión iniciada, redirigir al login
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: identificacion.php');
     exit;
@@ -13,7 +12,7 @@ if (!isset($_SESSION['usuario_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aplaudir'])) {
     $aid = (int)$_POST['aplaudir'];
     $mysqli->query("UPDATE actividad SET aplausos = aplausos + 1 WHERE id = $aid");
-    // no redirección, recargamos la misma URL con POST (la barra no cambia)
+    
 }
 
 // 3) Paginación
@@ -22,10 +21,13 @@ if ($page < 1) $page = 1;
 $limit  = 5;
 $offset = ($page - 1) * $limit;
 
-// 4) Traer actividades con GPX y tipo
+// 4) Traer actividades con su GPX y tipo
 $sql = "
   SELECT 
-    a.id, a.titulo, a.fecha, a.aplausos,
+    a.id,
+    a.titulo,
+    a.fecha,
+    a.aplausos,
     ta.nombre AS tipo,
     r.archivo AS gpx
   FROM actividad a
@@ -36,6 +38,7 @@ $sql = "
 ";
 $acts = $mysqli->query($sql);
 
+// Incluimos el header de usuarios
 include 'header.php';
 ?>
 <!DOCTYPE html>
@@ -44,34 +47,36 @@ include 'header.php';
   <meta charset="UTF-8">
   <title>Tablón de Actividades</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+  <!-- Cargar Leaflet desde carpeta local "leaflet" -->
+  <link rel="stylesheet" href="leaflet/leaflet.css">
+  <script src="leaflet/leaflet.js"></script>
+  <script src="leaflet/gpx/gpx.js"></script>
+
 </head>
 <body class="bg-index">
   <h1>Tablón de Actividades</h1>
 
   <?php while ($act = $acts->fetch_assoc()): ?>
     <div class="actividad">
-      <h2><?= $act['titulo'] ?></h2>
-      <p>Tipo: <?= $act['tipo'] ?></p>
-      <p>Fecha: <?= date('d/m/Y H:i', strtotime($act['fecha'])) ?></p>
-      <p>Aplausos: <?= $act['aplausos'] ?></p>
+      <h2><?php echo $act['titulo']; ?></h2>
+      <p>Tipo: <?php echo $act['tipo']; ?></p>
+      <p>Fecha: <?php echo date('d/m/Y H:i', strtotime($act['fecha'])); ?></p>
+      <p>Aplausos: <?php echo $act['aplausos']; ?></p>
 
       <!-- Formulario de aplauso -->
-      <form method="post" style="display:inline">
-        <input type="hidden" name="aplaudir" value="<?= $act['id'] ?>">
+      <form method="post">
+        <input type="hidden" name="aplaudir" value="<?php echo $act['id']; ?>">
         <button class="btn" type="submit">Aplaudir</button>
       </form>
 
       <!-- Mapa GPX -->
-      <div id="map-<?= $act['id'] ?>" class="mapa-actividad"></div>
+      <div id="map-<?php echo $act['id']; ?>" class="mapa-actividad"></div>
       <script>
         (function(){
-          var map = L.map('map-<?= $act['id'] ?>');
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ maxZoom:18 }).addTo(map);
-          new L.GPX('<?= $act['gpx'] ?>',{async:true})
-            .on('loaded', function(e){ map.fitBounds(e.target.getBounds()); })
+          var map = L.map('map-<?php echo $act['id']; ?>');
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
+          new L.GPX('<?php echo $act['gpx']; ?>', { async: true })
+            .on('loaded', function(e) { map.fitBounds(e.target.getBounds()); })
             .addTo(map);
         })();
       </script>
@@ -85,11 +90,11 @@ include 'header.php';
           WHERE c.actividad_id = {$act['id']}
         ");
         $parts = [];
-        while ($u = $resC->fetch_assoc()) {
-          $parts[] = $u['nombre'].' '.$u['apellidos'];
+        while ($urow = $resC->fetch_assoc()) {
+            $parts[] = $urow['nombre'] . ' ' . $urow['apellidos'];
         }
       ?>
-      <p>Participantes: <?= implode(', ', $parts) ?></p>
+      <p>Participantes: <?php echo implode(', ', $parts); ?></p>
 
       <!-- Imágenes -->
       <div class="imagenes-actividad">
@@ -97,7 +102,7 @@ include 'header.php';
           $resI = $mysqli->query("SELECT ruta FROM imagenes WHERE actividad_id = {$act['id']}");
           while ($img = $resI->fetch_assoc()):
         ?>
-          <img src="<?= $img['ruta'] ?>" alt="Foto actividad">
+          <img src="<?php echo $img['ruta']; ?>" alt="Foto actividad">
         <?php endwhile; ?>
       </div>
     </div>
@@ -106,9 +111,10 @@ include 'header.php';
   <!-- Paginación -->
   <div class="paginacion">
     <?php if ($page > 1): ?>
-      <a href="?page=<?= $page - 1 ?>" class="paginacion">Anterior</a>
+      <a href="?page=<?php echo $page - 1; ?>" class="paginacion">Anterior</a>
     <?php endif; ?>
-    <a href="?page=<?= $page + 1 ?>" class="paginacion">Siguiente</a>
+    <a href="?page=<?php echo $page + 1; ?>" class="paginacion">Siguiente</a>
   </div>
 </body>
 </html>
+

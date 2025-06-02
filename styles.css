@@ -230,6 +230,8 @@
     border-radius: 15px;
     display: flex;
     flex-direction: column; /* apila verticalmente */
+    margin-left: auto;
+    margin-right: auto;
     
   }
   
@@ -414,12 +416,14 @@
 
 /*estilo de cuando seleccionas un tipo de item contendor en el que se listan para editar o eliminar*/
 .tipoItem{
+  font-size: 30px;
+  
   background: #ffffff;
   padding: 20px; /* Espacio alrededor del contenido */
   margin-bottom: 20px;
   border-radius: 10px;
-  width: 400px;
-  margin-left: 500px;
+  width: 300px;
+  margin-left: 560px;
   margin-right: 400px;
   height: 150px;
 }
@@ -456,13 +460,13 @@
   color: #921717;
 }
 
-.mapa-actividad {
-    height: 100px;
-    width: 100%;
-    margin: 1rem 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
+ .mapa-actividad { 
+      height: 200px; 
+      width: 100%; 
+      margin: 10px 0; 
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
 
 
 .contenedor-ws{
