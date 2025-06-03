@@ -69,13 +69,13 @@ include 'header_admin.php';
     <?php while ($u = $res->fetch_assoc()): ?>
       <div class="g_usuario">
         <?php $foto = $u['foto'] ?: 'uploads/default.png'; ?>
-        <img src="<?=$foto?>" class="avatar">
+        <img src="<?=$foto?>">
         <div>
           <h3><?=$u['nombre']?> <?=$u['apellidos']?></h3>
         </div>
         <a href="ver_perfilAmigo.php?id=<?=$u['id']?>" class="paginacion">Ver Perfil</a>
         <a href="mod_user.php?id=<?=$u['id']?>" class="paginacion">Modificar</a>
-        <form method="post" style="display:inline">
+        <form method="post" >
           <input type="hidden" name="delete_id" value="<?=$u['id']?>">
           <button class="logout">Eliminar</button>
         </form>

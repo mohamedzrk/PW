@@ -65,14 +65,6 @@ include 'header_admin.php';
 
   <h1>Tablón de Actividades (admin)</h1>
 
-  <div class="buscador">
-    <form method="get" action="g_actividades.php">
-      <input type="text" name="q" placeholder="Buscar actividad (TODO)" disabled>
-      <button class="paginacion" type="submit" disabled>Buscar</button>
-      <!-- En un futuro puedes implementar filtrado usando q -->
-    </form>
-  </div>
-
   <?php if ($acts->num_rows === 0): ?>
     <p>No hay actividades para mostrar.</p>
   <?php endif; ?>
@@ -88,11 +80,11 @@ include 'header_admin.php';
 
       <!-- Botones de acción -->
       <div>
-        <form method="post" style="display:inline">
+        <form method="post">
           <input type="hidden" name="aplaudir" value="<?= $act['id'] ?>">
           <button class="btn" type="submit">Aplaudir</button>
         </form>
-        <form method="post" style="display:inline">
+        <form method="post">
           <input type="hidden" name="delete_images" value="<?= $act['id'] ?>">
           <button class="logout" type="submit">Eliminar imágenes</button>
         </form>
