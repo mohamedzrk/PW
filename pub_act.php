@@ -1,6 +1,6 @@
 <?php
-
-include 'db.php';
+// pub_act.php
+include 'db.php';  // Arranca sesión y deja disponible $mysqli
 
 // 1) Verificar sesión
 if (!isset($_SESSION['usuario_id'])) {
@@ -30,29 +30,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 2.3) Insertar actividad en la tabla 'actividad'
-    $sql1 = "
+    $mysqli->query("
       INSERT INTO actividad (usuario_id, titulo, tipo_actividad_id, fecha)
       VALUES ($usuario_id, '$titulo', $tipoActividad, '$fecha')
-    ";
-    $mysqli->query($sql1) or die("Error al guardar actividad: " . $mysqli->error);
+    ") or die("Error al guardar actividad: " . $mysqli->error);
     $actividad_id = $mysqli->insert_id;
 
     // 2.4) Guardar ruta GPX en la tabla 'rutas'
-    $sql2 = "
+    $mysqli->query("
       INSERT INTO rutas (actividad_id, archivo)
       VALUES ($actividad_id, '$rutaGpx')
-    ";
-    $mysqli->query($sql2) or die("Error al guardar ruta GPX: " . $mysqli->error);
+    ") or die("Error al guardar ruta GPX: " . $mysqli->error);
 
     // 2.5) Asociar compañeros (si se seleccionaron)
     if (!empty($_POST['companeros'])) {
         foreach ($_POST['companeros'] as $cid) {
             $cid = (int) $cid;
-            $sql3 = "
+            $mysqli->query("
               INSERT INTO compania (actividad_id, usuario_id)
               VALUES ($actividad_id, $cid)
-            ";
-            $mysqli->query($sql3) or die("Error al asociar compañero: " . $mysqli->error);
+            ") or die("Error al asociar compañero: " . $mysqli->error);
         }
     }
 
@@ -67,11 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $imgName = time() . "_{$i}." . $extImg;
                 $imgPath = "uploads/imagenes/$imgName";
                 move_uploaded_file($tmp, $imgPath);
-                $sql4 = "
+                $mysqli->query("
                   INSERT INTO imagenes (actividad_id, ruta)
                   VALUES ($actividad_id, '$imgPath')
-                ";
-                $mysqli->query($sql4) or die("Error al guardar imagen: " . $mysqli->error);
+                ") or die("Error al guardar imagen: " . $mysqli->error);
             }
         }
     }
@@ -84,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // 3) Cargar datos para mostrar en el formulario
 // 3.1) Tipos de actividad
 $tipos = $mysqli->query("SELECT id, nombre FROM tipo_actividad ORDER BY nombre");
-
 ?>
 <?php include 'header.php'; ?>
 
@@ -95,42 +90,31 @@ $tipos = $mysqli->query("SELECT id, nombre FROM tipo_actividad ORDER BY nombre")
   <title>Publicar Actividad</title>
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Cargamos jQuery 1.11.3  -->
+  <!-- Cargamos jQuery 1.11.3 -->
   <script src="jquery-1.11.3.min.js"></script>
   <script>
-    
-  
-    
-
+    // Igual que en g_perfil: usar $.getJSON para cargar datos
     function cargaAmigos() {
-      $.ajax({
-        type: "POST",
-        url: 'cargaAmigos.php',
-        dataType: 'json',
-        beforeSend: function() {
-          $("#resultado").html("Cargando amigos...");
-        },
-        success: function(data) {
-          $("#resultado").html("Listo.");
-          var select = $("#companeros"),
-              options = '';
-          select.empty();
-          // data es un array de objetos {id, nombre_completo}
-          for (var i = 0; i < data.length; i++) {
-            options += "<option value='" 
-                       + data[i].id + "'>"
-                       + data[i].nombre_completo 
-                       + "</option>";
-          }
-          select.append(options);
-        },
-        error: function() {
-          $("#resultado").html("Error al cargar amigos.");
+      // Llamada GET sencilla que espera JSON como respuesta
+      $.getJSON('cargaAmigos.php', function(data) {
+        var html = '';
+        // data es un array de objetos {id, nombre_completo}
+        for (var i = 0; i < data.length; i++) {
+          html += '<option value="' 
+                  + data[i].id + '">'
+                  + data[i].nombre_completo 
+                  + '</option>';
         }
+        $('#companeros').html(html);
+      }).fail(function() {
+        $('#companeros').html('<option value="">Error al cargar amigos</option>');
       });
     }
 
-    cargaAmigos();
+    // Al cargar la página, invocamos cargaAmigos()
+    $(document).ready(function() {
+      cargaAmigos();
+    });
   </script>
 </head>
 <body class="bg-index">
@@ -165,11 +149,9 @@ $tipos = $mysqli->query("SELECT id, nombre FROM tipo_actividad ORDER BY nombre")
       <!-- Compañeros (se llenará vía AJAX) -->
       <div class="campo">
         <label>Compañeros (sólo tus amigos):</label>
-        <select id="companeros" name="companeros[]" multiple size="5"">
-        
+        <select id="companeros" name="companeros[]" multiple>
+          <!-- Se rellenará desde $.getJSON -->
         </select>
-        
-        <div id="resultado"></div>
       </div>
 
       <!-- Múltiples imágenes -->

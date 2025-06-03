@@ -1,59 +1,55 @@
 <?php
 // g_items.php
-include 'db.php';
-session_start();
+include 'db.php';  // Arranca sesión y deja disponible $mysqli
 
-// Si no hay sesión iniciada, redirigir al login
+// 1) Verificar sesión
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: identificacion.php');
     exit;
 }
 
-
-// 1) Procesar formulario de alta
+// 2) Procesar formulario de alta (POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $type = $_POST['item_type'];      // 'pais', 'actividad', 'provincia' o 'localidad'
-    $name = trim($_POST['name']);     // Nombre del ítem
+    $type = $_POST['item_type'];   // 'pais', 'actividad', 'provincia' o 'localidad'
+    $name = $_POST['name'];        // Nombre del ítem 
 
     if ($name !== '') {
-        $nameEsc = $mysqli->real_escape_string($name);
-
-        switch ($type) {
-            case 'pais':
-                $mysqli->query("INSERT INTO paises (nombre) VALUES ('$nameEsc')");
-                break;
-
-            case 'actividad':
-                $mysqli->query("INSERT INTO tipo_actividad (nombre) VALUES ('$nameEsc')");
-                break;
-
-            case 'provincia':
-                $paisId = (int)$_POST['pais_id'];
-                $mysqli->query(
-                    "INSERT INTO provincias (nombre, pais_id)
-                     VALUES ('$nameEsc', $paisId)"
-                );
-                break;
-
-            case 'localidad':
-                $provId = (int)$_POST['provincia_id'];
-                $mysqli->query(
-                    "INSERT INTO localidades (nombre, provincia_id)
-                     VALUES ('$nameEsc', $provId)"
-                );
-                break;
+        if ($type === 'pais') {
+            // INSERT sencillo en tabla paises
+            $mysqli->query("INSERT INTO paises (nombre) VALUES ('$name')");
+        }
+        elseif ($type === 'actividad') {
+            // INSERT en tipo_actividad
+            $mysqli->query("INSERT INTO tipo_actividad (nombre) VALUES ('$name')");
+        }
+        elseif ($type === 'provincia') {
+            // INSERT en provincias, recibimos pais_id
+            $paisId = (int) $_POST['pais_id'];
+            $mysqli->query("
+                INSERT INTO provincias (nombre, pais_id)
+                VALUES ('$name', $paisId)
+            ");
+        }
+        elseif ($type === 'localidad') {
+            // INSERT en localidades, recibimos provincia_id
+            $provId = (int) $_POST['provincia_id'];
+            $mysqli->query("
+                INSERT INTO localidades (nombre, provincia_id)
+                VALUES ('$name', $provId)
+            ");
         }
     }
 
-    // Volver a cargar la página para ver el nuevo ítem
+    // Redirigimos para limpiar POST y ver los nuevos ítems
     header('Location: g_items.php');
     exit;
 }
 
-// 2) Cargar datos para los selects
-$listaPaises     = $mysqli->query("SELECT id, nombre FROM paises ORDER BY nombre")->fetch_all(MYSQLI_ASSOC);
-$listaProvincias = $mysqli->query("SELECT id, nombre FROM provincias ORDER BY nombre")->fetch_all(MYSQLI_ASSOC);
+// 3) Cargar listas para los selects “País” y “Provincia”
+$resPaises     = $mysqli->query("SELECT id, nombre FROM paises ORDER BY nombre");
+$resProvincias = $mysqli->query("SELECT id, nombre FROM provincias ORDER BY nombre");
 
+// 4) Incluir cabecera de administrador
 include 'header_admin.php';
 ?>
 <!DOCTYPE html>
@@ -62,12 +58,16 @@ include 'header_admin.php';
   <meta charset="UTF-8">
   <title>Gestión de Ítems</title>
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Incluir jQuery -->
+  <script src="jquery-1.11.3.min.js"></script>
 </head>
 <body class="bg-admin">
+
   <h1>Gestión de Ítems</h1>
 
   <div class="listado-items">
-    <h2>Listado de Ítems</h2>
+    <h2>Menú de ítems</h2>
     <ul class="menu">
       <li><a href="paises.php">País</a></li>
       <li><a href="tipoActividad.php">Actividad</a></li>
@@ -76,36 +76,36 @@ include 'header_admin.php';
     </ul>
   </div>
 
-  <!-- Alta País -->
-  <div id="alta-pais" class="alta-item">
+  <!-- === Alta País === -->
+  <div class="alta-item">
     <h2>Alta País</h2>
-    <form method="post">
+    <form method="post" action="g_items.php">
       <input type="hidden" name="item_type" value="pais">
       <div class="campo">
         <label>Nombre del país:</label>
         <input type="text" name="name" required>
       </div>
-      <button class="btn">Guardar País</button>
+      <button class="btn" type="submit">Guardar País</button>
     </form>
   </div>
 
-  <!-- Alta Tipo de Actividad -->
-  <div id="alta-actividad" class="alta-item">
+  <!-- === Alta Tipo de Actividad === -->
+  <div class="alta-item">
     <h2>Alta Tipo de Actividad</h2>
-    <form method="post">
+    <form method="post" action="g_items.php">
       <input type="hidden" name="item_type" value="actividad">
       <div class="campo">
         <label>Nombre de la actividad:</label>
         <input type="text" name="name" required>
       </div>
-      <button class="btn">Guardar Actividad</button>
+      <button class="btn" type="submit">Guardar Actividad</button>
     </form>
   </div>
 
-  <!-- Alta Provincia -->
-  <div id="alta-provincia" class="alta-item">
+  <!-- === Alta Provincia === -->
+  <div class="alta-item">
     <h2>Alta Provincia</h2>
-    <form method="post">
+    <form method="post" action="g_items.php">
       <input type="hidden" name="item_type" value="provincia">
       <div class="campo">
         <label>Nombre de la provincia:</label>
@@ -115,35 +115,78 @@ include 'header_admin.php';
         <label>País:</label>
         <select name="pais_id" required>
           <option value="">-- Selecciona país --</option>
-          <?php foreach ($listaPaises as $p): ?>
-            <option value="<?= $p['id'] ?>"><?= $p['nombre'] ?></option>
-          <?php endforeach; ?>
+          <?php while ($fila = $resPaises->fetch_assoc()): ?>
+            <option value="<?= $fila['id'] ?>"><?= $fila['nombre'] ?></option>
+          <?php endwhile; ?>
         </select>
       </div>
-      <button class="btn">Guardar Provincia</button>
+      <button class="btn" type="submit">Guardar Provincia</button>
     </form>
   </div>
 
-  <!-- Alta Localidad -->
-  <div id="alta-localidad" class="alta-item">
+  <!-- === Alta Localidad (con AJAX) === -->
+  <div class="alta-item">
     <h2>Alta Localidad</h2>
-    <form method="post">
+    <form method="post" action="g_items.php">
       <input type="hidden" name="item_type" value="localidad">
+
       <div class="campo">
         <label>Nombre de la localidad:</label>
         <input type="text" name="name" required>
       </div>
+
+      <!-- Desplegable de País -->
       <div class="campo">
-        <label>Provincia:</label>
-        <select name="provincia_id" required>
-          <option value="">-- Selecciona provincia --</option>
-          <?php foreach ($listaProvincias as $pr): ?>
-            <option value="<?= $pr['id'] ?>"><?= $pr['nombre'] ?></option>
-          <?php endforeach; ?>
+        <label>País:</label>
+        <select id="pais_select" name="pais_id" required>
+          <option value="">-- Selecciona país --</option>
+          <?php
+            // Volvemos a consultar países para este select
+            $resP = $mysqli->query("SELECT id, nombre FROM paises ORDER BY nombre");
+            while ($p = $resP->fetch_assoc()):
+          ?>
+            <option value="<?= $p['id'] ?>"><?= $p['nombre'] ?></option>
+          <?php endwhile; ?>
         </select>
       </div>
-      <button class="btn">Guardar Localidad</button>
+
+      <!-- Desplegable de Provincia (se llenará vía AJAX) -->
+      <div class="campo">
+        <label>Provincia:</label>
+        <select id="prov_select" name="provincia_id" required>
+          <option value="">-- Primero elige país --</option>
+        </select>
+      </div>
+
+      <button class="btn" type="submit">Guardar Localidad</button>
     </form>
   </div>
+
+  <script>
+    
+    $('#pais_select').on('change', function() {
+      var paisId = $(this).val();
+
+      if (paisId === '') {
+        // Si no hay país, dejamos el select de provincias vacío
+        $('#prov_select').html('<option value="">-- Primero elige país --</option>');
+        return;
+      }
+
+      // AJAX con GET a obtenerProvincias.php?pais_id=...
+      $.getJSON('obtenerProvincias.php', { pais_id: paisId })
+        .done(function(data) {
+          var html = '<option value="">-- Selecciona provincia --</option>';
+          for (var i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
+          }
+          $('#prov_select').html(html);
+        })
+        .fail(function() {
+          $('#prov_select').html('<option value="">Error al cargar provincias</option>');
+        });
+    });
+  </script>
+
 </body>
 </html>
