@@ -2,12 +2,11 @@
 
 include 'db.php';
 
-// Si no hay sesión iniciada, redirigir al login
+// 1) Verificar sesión
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: identificacion.php');
     exit;
 }
-
 $usuario_id = (int) $_SESSION['usuario_id'];
 
 // 2) Procesar formulario al hacer POST
@@ -31,46 +30,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 2.3) Insertar actividad en la tabla 'actividad'
-    $mysqli->query("
-        INSERT INTO actividad (usuario_id, titulo, tipo_actividad_id, fecha)
-        VALUES ($usuario_id, '$titulo', $tipoActividad, '$fecha')
-    ") or die("Error al guardar actividad: " . $mysqli->error);
+    $sql1 = "
+      INSERT INTO actividad (usuario_id, titulo, tipo_actividad_id, fecha)
+      VALUES ($usuario_id, '$titulo', $tipoActividad, '$fecha')
+    ";
+    $mysqli->query($sql1) or die("Error al guardar actividad: " . $mysqli->error);
     $actividad_id = $mysqli->insert_id;
 
     // 2.4) Guardar ruta GPX en la tabla 'rutas'
-    $mysqli->query("
-        INSERT INTO rutas (actividad_id, archivo)
-        VALUES ($actividad_id, '$rutaGpx')
-    ") or die("Error al guardar ruta GPX: " . $mysqli->error);
+    $sql2 = "
+      INSERT INTO rutas (actividad_id, archivo)
+      VALUES ($actividad_id, '$rutaGpx')
+    ";
+    $mysqli->query($sql2) or die("Error al guardar ruta GPX: " . $mysqli->error);
 
-    // 2.5) Asociar compañeros (sólo IDs que vienen del formulario)
+    // 2.5) Asociar compañeros (si se seleccionaron)
     if (!empty($_POST['companeros'])) {
         foreach ($_POST['companeros'] as $cid) {
             $cid = (int) $cid;
-            $mysqli->query("
-                INSERT INTO compania (actividad_id, usuario_id)
-                VALUES ($actividad_id, $cid)
-            ") or die("Error al asociar compañero: " . $mysqli->error);
+            $sql3 = "
+              INSERT INTO compania (actividad_id, usuario_id)
+              VALUES ($actividad_id, $cid)
+            ";
+            $mysqli->query($sql3) or die("Error al asociar compañero: " . $mysqli->error);
         }
     }
 
-    // 2.6) Subir **múltiples** imágenes
+    // 2.6) Subir múltiples imágenes (opcional)
     if (!empty($_FILES['imagenes']['name'][0])) {
-        // Crear carpeta si no existe
         if (!is_dir('uploads/imagenes')) {
             mkdir('uploads/imagenes', 0755, true);
         }
-        // Recorremos cada índice de $_FILES['imagenes']
         foreach ($_FILES['imagenes']['tmp_name'] as $i => $tmp) {
             if ($_FILES['imagenes']['error'][$i] === 0) {
                 $extImg  = pathinfo($_FILES['imagenes']['name'][$i], PATHINFO_EXTENSION);
                 $imgName = time() . "_{$i}." . $extImg;
                 $imgPath = "uploads/imagenes/$imgName";
                 move_uploaded_file($tmp, $imgPath);
-                $mysqli->query("
-                    INSERT INTO imagenes (actividad_id, ruta)
-                    VALUES ($actividad_id, '$imgPath')
-                ") or die("Error al guardar imagen: " . $mysqli->error);
+                $sql4 = "
+                  INSERT INTO imagenes (actividad_id, ruta)
+                  VALUES ($actividad_id, '$imgPath')
+                ";
+                $mysqli->query($sql4) or die("Error al guardar imagen: " . $mysqli->error);
             }
         }
     }
@@ -81,35 +82,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // 3) Cargar datos para mostrar en el formulario
-//    3.1) Tipos de actividad
+// 3.1) Tipos de actividad
 $tipos = $mysqli->query("SELECT id, nombre FROM tipo_actividad ORDER BY nombre");
 
-//    3.2) Sólo cargar en “Compañeros” a los que ya son amigos
-$usuarios = [];
-$sql = "
-  SELECT u.id, u.nombre, u.apellidos
-  FROM usuario u
-  JOIN amistad a
-    ON (
-         (a.usuario_id = $usuario_id AND a.amigo_id = u.id)
-         OR
-         (a.amigo_id = $usuario_id AND a.usuario_id = u.id)
-       )
-  WHERE a.estado = 'aceptado'
-  ORDER BY u.nombre, u.apellidos
-";
-$res = $mysqli->query($sql);
-while ($row = $res->fetch_assoc()) {
-    $usuarios[] = $row;
-}
 ?>
 <?php include 'header.php'; ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Publicar Actividad</title>
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Cargamos jQuery 1.11.3  -->
+  <script src="jquery-1.11.3.min.js"></script>
+  <script>
+    
+  
+    
+
+    function cargaAmigos() {
+      $.ajax({
+        type: "POST",
+        url: 'cargaAmigos.php',
+        dataType: 'json',
+        beforeSend: function() {
+          $("#resultado").html("Cargando amigos...");
+        },
+        success: function(data) {
+          $("#resultado").html("Listo.");
+          var select = $("#companeros"),
+              options = '';
+          select.empty();
+          // data es un array de objetos {id, nombre_completo}
+          for (var i = 0; i < data.length; i++) {
+            options += "<option value='" 
+                       + data[i].id + "'>"
+                       + data[i].nombre_completo 
+                       + "</option>";
+          }
+          select.append(options);
+        },
+        error: function() {
+          $("#resultado").html("Error al cargar amigos.");
+        }
+      });
+    }
+
+    cargaAmigos();
+  </script>
 </head>
 <body class="bg-index">
 
@@ -119,42 +141,40 @@ while ($row = $res->fetch_assoc()) {
 
       <!-- Título -->
       <div class="campo">
-        <label>Título:</label><br>
+        <label>Título:</label>
         <input type="text" name="titulo" required>
       </div>
 
       <!-- Tipo de actividad -->
       <div class="campo">
-        <label>Tipo de Actividad:</label><br>
+        <label>Tipo de Actividad:</label>
         <select name="tipoActividad" required>
           <option value="">--</option>
-          <?php foreach ($tipos as $t): ?>
+          <?php while ($t = $tipos->fetch_assoc()): ?>
             <option value="<?= $t['id'] ?>"><?= $t['nombre'] ?></option>
-          <?php endforeach; ?>
+          <?php endwhile; ?>
         </select>
       </div>
 
       <!-- Archivo GPX -->
       <div class="campo">
-        <label>Ruta (archivo GPX):</label><br>
+        <label>Ruta (archivo GPX):</label>
         <input type="file" name="rutaGPX" accept=".gpx" required>
       </div>
 
-      <!-- Compañeros (sólo amigos) -->
+      <!-- Compañeros (se llenará vía AJAX) -->
       <div class="campo">
-        <label>Compañeros (sólo tus amigos):</label><br>
-        <select name="companeros[]" multiple>
-          <?php foreach ($usuarios as $u): ?>
-            <option value="<?= $u['id'] ?>">
-              <?= $u['nombre'] . ' ' . $u['apellidos'] ?>
-            </option>
-          <?php endforeach; ?>
+        <label>Compañeros (sólo tus amigos):</label>
+        <select id="companeros" name="companeros[]" multiple size="5"">
+        
         </select>
+        
+        <div id="resultado"></div>
       </div>
 
       <!-- Múltiples imágenes -->
       <div class="campo">
-        <label>Imágenes (puedes seleccionar varias):</label><br>
+        <label>Imágenes (puedes seleccionar varias):</label>
         <input type="file" name="imagenes[]" accept=".jpg,.jpeg,.png" multiple>
       </div>
 

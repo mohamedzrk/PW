@@ -93,6 +93,6 @@ include 'header.php';
     </div>
   <?php endwhile; ?>
 
-  <a href="ver_perfilAmigo.php?id=<?php echo $user_id; ?>" class="paginacion">⬅ Volver al perfil</a>
+  <a href="ver_perfilAmigo.php?id=<?php echo $user_id; ?>" class="paginacion">Volver al perfil</a>
 </body>
 </html>

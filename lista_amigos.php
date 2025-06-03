@@ -70,7 +70,7 @@ include 'header.php';
       <?php 
         $foto = $f['foto'] ?: 'uploads/default.png'; 
       ?>
-      <img src="<?php echo $foto ?>" class="avatar">
+      <img src="<?php echo $foto ?>" >
       <h3><?php echo $f['nombre'] . ' ' . $f['apellidos'] ?></h3>
 
       <?php
@@ -104,7 +104,7 @@ include 'header.php';
   <?php endwhile; ?>
 
   <a href="ver_perfilAmigo.php?id=<?php echo $user_id ?>" class="paginacion">
-    ⬅ Volver al perfil
+    Volver al perfil
   </a>
 </body>
 </html>
